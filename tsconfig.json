@@ -2,6 +2,25 @@
   "extends": "./tsconfig.base.json",
   "compileOnSave": false,
   "files": [],
-  "references": [],
+  "references": [
+    {
+      "path": "./auth-service-e2e"
+    },
+    {
+      "path": "./auth-service"
+    },
+    {
+      "path": "./order-service-e2e"
+    },
+    {
+      "path": "./order-service"
+    },
+    {
+      "path": "./shared"
+    },
+    {
+      "path": "./api-gateway"
+    }
+  ],
   "compilerOptions": {}
 }

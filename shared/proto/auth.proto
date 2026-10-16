@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package auth;
+
+service AuthService {
+  rpc Register (RegisterRequest) returns (AuthTokenResponse);
+  rpc SendOtp (SendOtpRequest) returns (SendOtpResponse);
+  rpc VerifyOtp (VerifyOtpRequest) returns (AuthTokenResponse);
+  rpc LoginWithEmail (EmailLoginRequest) returns (AuthTokenResponse);
+  rpc ValidateUser (ValidateUserRequest) returns (ValidateUserResponse);
+}
+
+message RegisterRequest {
+  string name = 1;
+  optional string email = 2;
+  optional string password = 3;
+  optional string phone = 4;
+  optional string otp = 5;
+}
+
+message SendOtpRequest {
+  string phone = 1;
+  optional string purpose = 2;
+}
+
+message SendOtpResponse {
+  bool success = 1;
+  string message = 2;
+  optional string otp_preview = 3;
+}
+
+message VerifyOtpRequest {
+  string phone = 1;
+  string otp = 2;
+  optional string purpose = 3;
+}
+
+message EmailLoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message AuthUser {
+  int32 id = 1;
+  string name = 2;
+  optional string email = 3;
+  optional string phone = 4;
+  optional string status = 5;
+}
+
+message AuthTokenResponse {
+  bool success = 1;
+  string message = 2;
+  optional string access_token = 3;
+  optional string refresh_token = 4;
+  optional AuthUser user = 5;
+  optional string error = 6;
+}
+
+message ValidateUserRequest {
+  int32 user_id = 1;
+}
+
+message ValidateUserResponse {
+  bool is_valid = 1;
+  string data = 2;
+}
