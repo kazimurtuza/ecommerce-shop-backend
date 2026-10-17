@@ -1,11 +1,17 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable, BadRequestException, Logger } from '@nestjs/common';
 import * as crypto from 'crypto';
 import { PrismaService } from '../prisma/prisma.service';
 import { SendOtpDto, VerifyOtpDto } from './dto/otp.dto';
+import { SmsService } from './sms.service';
 
 @Injectable()
 export class OtpService {
-  constructor(private readonly prisma: PrismaService) {}
+  private readonly logger = new Logger(OtpService.name);
+
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly smsService: SmsService,
+  ) {}
 
   private hashOtp(otp: string): string {
     return crypto.createHash('sha256').update(otp).digest('hex');
@@ -30,10 +36,21 @@ export class OtpService {
       },
     });
 
+    // Send SMS via sms.net.bd gateway
+    const message = `Your verification code is ${generatedOtp}. Valid for 5 minutes.`;
+    const smsResult = await this.smsService.sendSms(dto.phone, message);
+
+    const isApiKeyConfigured = Boolean(process.env.SMS_NET_BD_API_KEY);
+    const isProduction = process.env.NODE_ENV === 'production';
+
     return {
       success: true,
-      message: `OTP sent successfully to ${dto.phone}`,
-      otpPreview: generatedOtp,
+      message: smsResult.success
+        ? `OTP sent successfully to ${dto.phone}`
+        : isApiKeyConfigured
+        ? `OTP generated, but SMS failed: ${smsResult.message}`
+        : `OTP sent successfully to ${dto.phone} (SMS key not set)`,
+      otpPreview: !isProduction ? generatedOtp : undefined,
     };
   }
 

@@ -26,7 +26,7 @@ export class AppService {
     private readonly usersService: UsersService,
     private readonly credentialsService: CredentialsService,
     private readonly sessionsService: SessionsService,
-  ) {}
+  ) { }
 
   private hashPassword(password: string): string {
     return crypto.createHash('sha256').update(password).digest('hex');
@@ -82,14 +82,11 @@ export class AppService {
           refresh_token_hash: refreshTokenHash,
           expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
         });
-
         return {
           success: true,
           message: 'OTP verified successfully. Login successful.',
-          access_token: accessToken,
-          accessToken: accessToken,
-          refresh_token: refreshToken,
-          refreshToken: refreshToken,
+          accessToken,
+          refreshToken,
           user: {
             id: user.id,
             name: user.name,
@@ -97,7 +94,7 @@ export class AppService {
             phone: user.phone,
             status: user.status,
           },
-        } as any;
+        } as AuthTokenResponse;
       }
 
       // If phone already exists, send OTP for login

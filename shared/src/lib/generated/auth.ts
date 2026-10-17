@@ -49,8 +49,8 @@ export interface AuthUser {
 export interface AuthTokenResponse {
   success: boolean;
   message: string;
-  access_token?: string | undefined;
-  refresh_token?: string | undefined;
+  accessToken?: string | undefined;
+  refreshToken?: string | undefined;
   user?: AuthUser | undefined;
   error?: string | undefined;
 }
