@@ -2,6 +2,13 @@
  * This is not a production server yet!
  * This is only a minimal backend to get started.
  */
+import 'dotenv/config';
+import * as dotenv from 'dotenv';
+import * as path from 'path';
+
+// Ensure api-gateway/.env is loaded if running from workspace root or dist
+dotenv.config({ path: path.resolve(process.cwd(), 'api-gateway/.env') });
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
