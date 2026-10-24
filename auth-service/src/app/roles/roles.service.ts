@@ -11,10 +11,11 @@ export class RolesService implements OnModuleInit {
     try {
       const count = await this.prisma.role.count();
       if (count === 0) {
+        const now = new Date();
         await this.prisma.role.createMany({
           data: [
-            { name: 'user', description: 'Standard user' },
-            { name: 'admin', description: 'Administrator' },
+            { name: 'user', description: 'Standard user', updated_at: now },
+            { name: 'admin', description: 'Administrator', updated_at: now },
           ],
           skipDuplicates: true,
         });
@@ -29,6 +30,7 @@ export class RolesService implements OnModuleInit {
       data: {
         name: dto.name.toLowerCase().trim(),
         description: dto.description || null,
+        updated_at: new Date(),
       },
     });
   }

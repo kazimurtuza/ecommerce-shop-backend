@@ -63,23 +63,32 @@ export class UsersService {
     });
     if (!role) {
       role = await this.prisma.role.create({
-        data: { name: roleName, description: `${roleName} role` },
+        data: {
+          name: roleName,
+          description: `${roleName} role`,
+          updated_at: new Date(),
+        },
       });
     }
 
     // Atomic transaction to create user, credentials, and assign role
     const newUser = await this.prisma.$transaction(async (tx) => {
+      const now = new Date();
       return tx.user.create({
         data: {
           name: dto.name,
           email,
           phone,
           status: dto.status || 'active',
-          phone_verified_at: dto.otp ? new Date() : null,
+          phone_verified_at: dto.otp ? now : null,
+          created_at: now,
+          updated_at: now,
           credentials: dto.password
             ? {
                 create: {
                   password_hash: this.hashPassword(dto.password),
+                  created_at: now,
+                  updated_at: now,
                 },
               }
             : undefined,

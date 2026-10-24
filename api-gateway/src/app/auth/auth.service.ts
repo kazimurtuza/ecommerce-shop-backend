@@ -2,7 +2,7 @@ import { Injectable, Inject, OnModuleInit } from '@nestjs/common';
 import type { ClientGrpc } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
 import {
-  AuthGrpcService,
+  AuthServiceClient,
   RegisterRequest,
   SendOtpRequest,
   VerifyOtpRequest,
@@ -12,12 +12,12 @@ import {
 
 @Injectable()
 export class AuthService implements OnModuleInit {
-  private authGrpcService!: AuthGrpcService;
+  private authGrpcService!: AuthServiceClient;
 
   constructor(@Inject('AUTH_SERVICE') private readonly client: ClientGrpc) {}
 
   onModuleInit() {
-    this.authGrpcService = this.client.getService<AuthGrpcService>('AuthService');
+    this.authGrpcService = this.client.getService<AuthServiceClient>('AuthService');
   }
 
   async register(data: RegisterRequest) {

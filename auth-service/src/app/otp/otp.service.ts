@@ -36,20 +36,20 @@ export class OtpService {
       },
     });
 
-    // Send SMS via sms.net.bd gateway
+    // Send SMS
     const message = `Your verification code is ${generatedOtp}. Valid for 5 minutes.`;
     const smsResult = await this.smsService.sendSms(dto.phone, message);
 
-    const isApiKeyConfigured = Boolean(process.env.SMS_NET_BD_API_KEY);
+    const isConfigured = this.smsService.isConfigured();
     const isProduction = process.env.NODE_ENV === 'production';
 
     return {
       success: true,
       message: smsResult.success
         ? `OTP sent successfully to ${dto.phone}`
-        : isApiKeyConfigured
+        : isConfigured
         ? `OTP generated, but SMS failed: ${smsResult.message}`
-        : `OTP sent successfully to ${dto.phone} (SMS key not set)`,
+        : `OTP sent successfully to ${dto.phone} (SMS gateway not configured in .env)`,
       otpPreview: !isProduction ? generatedOtp : undefined,
     };
   }

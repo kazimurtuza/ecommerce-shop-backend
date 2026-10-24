@@ -11,76 +11,158 @@ export interface SendSmsResult {
 @Injectable()
 export class SmsService {
   private readonly logger = new Logger(SmsService.name);
-  private readonly endpoint = process.env.SMS_NET_BD_URL || 'https://api.sms.net.bd/sendsms';
 
-  /**
-   * Format phone number to clean string.
-   * Strips spaces, hyphens, and leading +
-   */
-  private formatPhoneNumber(phone: string): string {
-    return phone.replace(/[\s\-+]/g, '');
+  private get apiKey(): string | undefined {
+    return process.env.SMS_API_KEY;
   }
 
-  async sendSms(to: string, message: string): Promise<SendSmsResult> {
-    const apiKey = process.env.SMS_NET_BD_API_KEY;
-    const senderId = process.env.SMS_NET_BD_SENDER_ID;
-    const formattedPhone = this.formatPhoneNumber(to);
+  private get senderId(): string | undefined {
+    return process.env.SMS_SENDER_ID;
+  }
 
-    if (!apiKey) {
+  private get gatewayUrl(): string | undefined {
+    return process.env.SMS_GATEWAY_URL;
+  }
+
+  /**
+   * Check if SMS gateway is properly configured in .env
+   */
+  isConfigured(): boolean {
+    return Boolean(this.apiKey && this.gatewayUrl);
+  }
+
+  /**
+   * Format phone number (e.g. 01XXXXXXXXX -> 8801XXXXXXXXX)
+   */
+  private formatPhoneNumber(phone: string): string {
+    let clean = phone.replace(/[\s\-+]/g, '');
+    if (clean.startsWith('01') && clean.length === 11) {
+      clean = '88' + clean;
+    }
+    return clean;
+  }
+
+  /**
+   * Build URL-encoded form data according to gateway parameters
+   */
+  private buildPayload(phone: string, message: string): URLSearchParams {
+    const params = new URLSearchParams();
+    const isSmsNetBd = this.gatewayUrl?.includes('sms.net.bd');
+
+    params.append('api_key', this.apiKey || '');
+
+    if (isSmsNetBd) {
+      params.append('to', phone);
+      params.append('msg', message);
+      if (this.senderId) {
+        params.append('sender_id', this.senderId);
+      }
+    } else {
+      // BulkSMSBD and standard Bangladeshi SMS gateways
+      params.append('number', phone);
+      params.append('message', message);
+      if (this.senderId) {
+        params.append('senderid', this.senderId);
+      }
+    }
+
+    return params;
+  }
+
+  /**
+   * Parse gateway response
+   */
+  private parseResponse(data: any): { success: boolean; message: string; requestId?: string | number } {
+    if (!data) {
+      return { success: false, message: 'Empty response from SMS gateway' };
+    }
+
+    // BulkSMSBD success response code (202)
+    if (
+      data.response_code === 202 ||
+      data.response_code === '202' ||
+      (typeof data === 'string' && data.includes('202'))
+    ) {
+      return {
+        success: true,
+        message: data.success_message || 'SMS submitted successfully',
+      };
+    }
+
+    // sms.net.bd success response (error: 0)
+    if (data.error === 0 || data.error === '0') {
+      return {
+        success: true,
+        message: data.msg || 'SMS submitted successfully',
+        requestId: data.data?.request_id,
+      };
+    }
+
+    const errorMessage =
+      data.error_message ||
+      data.msg ||
+      (typeof data === 'string' ? data : JSON.stringify(data));
+
+    return {
+      success: false,
+      message: errorMessage || 'Failed to send SMS',
+    };
+  }
+
+  /**
+   * Send SMS via gateway configured in .env
+   */
+  async sendSms(to: string, message: string): Promise<SendSmsResult> {
+    const formattedPhone = this.formatPhoneNumber(to);
+    const { apiKey, gatewayUrl } = this;
+
+    if (!apiKey || !gatewayUrl) {
       this.logger.warn(
-        `[SmsService] SMS_NET_BD_API_KEY is not set in .env. SMS will NOT be sent to ${formattedPhone}. Message: "${message}"`
+        `[SmsService] SMS configuration is missing in .env (SMS_API_KEY or SMS_GATEWAY_URL not set). SMS will not be sent to ${formattedPhone}.`
       );
       return {
         success: false,
-        message: 'SMS Gateway API key is not configured in .env',
+        message: 'SMS gateway is not configured in .env',
       };
     }
 
     try {
-      const params = new URLSearchParams();
-      params.append('api_key', apiKey);
-      params.append('msg', message);
-      params.append('to', formattedPhone);
+      this.logger.log(`[SmsService] Sending SMS to ${formattedPhone}`);
 
-      if (senderId && senderId.trim() !== '') {
-        params.append('sender_id', senderId.trim());
-      }
+      const params = this.buildPayload(formattedPhone, message);
 
-      this.logger.log(`[SmsService] Sending SMS via sms.net.bd to: ${formattedPhone}`);
-
-      const response = await axios.post(this.endpoint, params, {
+      const response = await axios.post(gatewayUrl, params, {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         timeout: 10000,
       });
 
-      const data = response.data;
+      const result = this.parseResponse(response.data);
 
-      // sms.net.bd response structure:
-      // { "error": 0, "msg": "Request successfully submitted", "data": { "request_id": 1234 } }
-      if (data && (data.error === 0 || data.error === '0')) {
-        this.logger.log(
-          `[SmsService] SMS sent successfully to ${formattedPhone}. Request ID: ${data.data?.request_id}`
-        );
+      if (result.success) {
+        this.logger.log(`[SmsService] SMS sent successfully to ${formattedPhone}: ${result.message}`);
         return {
           success: true,
-          message: data.msg || 'Request successfully submitted',
-          requestId: data.data?.request_id,
-        };
-      } else {
-        const errorMsg = data?.msg || 'Failed to send SMS via sms.net.bd';
-        this.logger.error(`[SmsService] SMS Gateway returned error: ${errorMsg}`);
-        return {
-          success: false,
-          message: errorMsg,
-          error: data,
+          message: result.message,
+          requestId: result.requestId,
         };
       }
+
+      this.logger.error(`[SmsService] SMS gateway returned error: ${result.message}`);
+      return {
+        success: false,
+        message: result.message,
+        error: response.data,
+      };
     } catch (error: any) {
       const errorMsg =
-        error?.response?.data?.msg || error?.message || 'Error occurred while contacting SMS Gateway';
-      this.logger.error(`[SmsService] HTTP error sending SMS: ${errorMsg}`);
+        error?.response?.data?.error_message ||
+        error?.response?.data?.msg ||
+        error?.message ||
+        'Error occurred while contacting SMS Gateway';
+
+      this.logger.error(`[SmsService] HTTP error: ${errorMsg}`);
       return {
         success: false,
         message: errorMsg,

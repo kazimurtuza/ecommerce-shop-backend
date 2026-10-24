@@ -5,7 +5,8 @@
   "scripts": {
     "prisma:generate": "prisma generate --config=auth-service/prisma.config.ts",
     "prisma:migrate": "prisma migrate dev --config=auth-service/prisma.config.ts",
-    "prisma:studio": "prisma studio --config=auth-service/prisma.config.ts"
+    "prisma:studio": "prisma studio --config=auth-service/prisma.config.ts",
+    "proto:generate": "node scripts/generate-proto.js"
   },
   "private": true,
   "devDependencies": {

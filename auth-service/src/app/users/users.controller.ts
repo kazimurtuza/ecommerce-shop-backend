@@ -10,10 +10,10 @@ import type {
   VerifyUserRequest,
   UserResponse,
   UserListResponse,
-  UserGrpcModel,
+  User,
 } from '@org/shared';
 
-function toGrpcUser(user: any): UserGrpcModel {
+function toGrpcUser(user: any): User {
   const roleName = user.roles?.[0]?.role?.name || user.role || undefined;
   return {
     id: String(user.id),
