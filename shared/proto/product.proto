@@ -1,0 +1,144 @@
+
+syntax = "proto3";
+
+package product;
+
+// ==================== SERVICE ====================
+
+service ProductService {
+  rpc CreateProduct (CreateProductRequest) returns (ProductResponse);
+  rpc GetProductById (GetProductByIdRequest) returns (ProductResponse);
+  rpc GetAllProducts (GetAllProductsRequest) returns (ProductListResponse);
+  rpc UpdateProduct (UpdateProductRequest) returns (ProductResponse);
+  rpc DeleteProduct (DeleteProductRequest) returns (DeleteProductResponse);
+}
+
+// ==================== ENUMS ====================
+
+enum ProductStatus {
+  PRODUCT_STATUS_UNSPECIFIED = 0;
+  PRODUCT_STATUS_DRAFT = 1;
+  PRODUCT_STATUS_ACTIVE = 2;
+  PRODUCT_STATUS_INACTIVE = 3;
+}
+
+// ==================== PRODUCT ====================
+message Product {
+  string id = 1;
+  string name = 2;
+  string slug = 3;
+  string description = 4;
+  string category_id = 5;
+  string brand_id = 6;
+  ProductStatus status = 7;
+  repeated ProductVariant variants = 8;
+  string created_at = 9;
+  string updated_at = 10;
+}
+
+message CreateProductRequest {
+  string name = 1;
+  string slug = 2;
+  string description = 3;
+  string category_id = 4;
+  string brand_id = 5;
+  ProductStatus status = 6;
+  repeated ProductVariant variants = 7;
+}
+
+message GetProductByIdRequest {
+  string id = 1;
+}
+
+message GetAllProductsRequest {
+  int32 page = 1;
+  int32 limit = 2;
+  string search = 3;
+  string category_id = 4;
+  string brand_id = 5;
+  ProductStatus status = 6;
+}
+
+message UpdateProductRequest {
+  string id = 1;
+  string name = 2;
+  string slug = 3;
+  string description = 4;
+  string category_id = 5;
+  string brand_id = 6;
+  ProductStatus status = 7;
+}
+
+message ProductResponse {
+  bool success = 1;
+  string message = 2;
+  Product product = 3;
+}
+
+message ProductListResponse {
+  bool success = 1;
+  repeated Product products = 2;
+  int32 total = 3;
+  int32 page = 4;
+  int32 limit = 5;
+}
+
+message DeleteProductRequest {
+  string id = 1;
+}
+
+message DeleteProductResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+// ==================== PRODUCT VARIANT ====================
+
+message ProductVariant {
+  string id = 1;
+  string product_id = 2;
+  string sku = 3;
+  string barcode = 4;
+  string price = 5;
+  string sale_price = 6;
+  string cost_price = 7;
+  string img_link = 8;
+  string discount_amount = 9;
+  bool is_default = 10;
+  bool is_active = 11;
+  repeated VariantAttribute attributes = 12;
+}
+
+message VariantAttribute {
+  string attribute_id = 1;
+  string attribute_name = 2;
+  string attribute_value_id = 3;
+  string attribute_value = 4;
+}
+
+message CreateProductVariantRequest {
+  string product_id = 1;
+  string sku = 2;
+  string barcode = 3;
+  string price = 4;
+  string sale_price = 5;
+  string cost_price = 6;
+  string img_link = 7;
+  bool is_default = 8;
+  repeated VariantAttributeInput attributes = 9;
+}
+
+message VariantAttributeInput {
+  string attribute_id = 1;
+  string attribute_value_id = 2;
+}
+
+message CreateProductVariantResponse {
+  bool success = 1;
+  string message = 2;
+  ProductVariant variant = 3;
+}
+
+// ==================== EMPTY ====================
+
+message Empty {}

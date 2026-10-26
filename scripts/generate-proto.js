@@ -42,7 +42,7 @@ const pluginPath = path.join(
 const args = [
   `--plugin=protoc-gen-ts_proto=${pluginPath}`,
   `--ts_proto_out=${outDir}`,
-  '--ts_proto_opt=nestJs=true',
+  '--ts_proto_opt=nestJs=true,exportCommonSymbols=false',
   `--proto_path=${protoDir}`,
   ...protoFiles,
 ];

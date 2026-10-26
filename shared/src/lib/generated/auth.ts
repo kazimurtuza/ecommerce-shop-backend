@@ -24,7 +24,7 @@ export interface SendOtpRequest {
 export interface SendOtpResponse {
   success: boolean;
   message: string;
-  otp_preview?: string | undefined;
+  otpPreview?: string | undefined;
 }
 
 export interface VerifyOtpRequest {
@@ -56,11 +56,11 @@ export interface AuthTokenResponse {
 }
 
 export interface ValidateUserRequest {
-  user_id: number;
+  userId: number;
 }
 
 export interface ValidateUserResponse {
-  is_valid: boolean;
+  isValid: boolean;
   data: string;
 }
 

@@ -1,6 +1,6 @@
 import { Injectable, ConflictException, NotFoundException, BadRequestException } from '@nestjs/common';
 import * as crypto from 'crypto';
-import { CreateUserDto, UpdateUserDto } from './dto/create-user.dto';
+import { UserProto } from '@org/shared';
 import { PrismaService } from '../prisma/prisma.service';
 import { OtpService } from '../otp/otp.service';
 
@@ -15,7 +15,7 @@ export class UsersService {
     return crypto.createHash('sha256').update(password).digest('hex');
   }
 
-  async createUser(dto: CreateUserDto) {
+  async createUser(dto: UserProto.CreateUserRequest) {
     if (!dto.email && !dto.phone) {
       throw new BadRequestException('Either email or phone number is required to register');
     }
@@ -141,7 +141,13 @@ export class UsersService {
     });
   }
 
-  async updateUser(id: string | number, dto: UpdateUserDto) {
+  async updateUser(
+    id: string | number,
+    dto: Partial<UserProto.UpdateUserRequest> & {
+      email_verified_at?: Date | null;
+      phone_verified_at?: Date | null;
+    }
+  ) {
     const numId = Number(id);
     const user = await this.prisma.user.findUnique({ where: { id: numId } });
     if (!user) {

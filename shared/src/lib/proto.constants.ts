@@ -4,10 +4,12 @@ import * as fs from 'fs';
 export const AUTH_PACKAGE = 'auth';
 export const ORDER_PACKAGE = 'order';
 export const USER_PACKAGE = 'user';
+export const PRODUCT_PACKAGE = 'product';
 
 
 export const DEFAULT_AUTH_GRPC_PORT = 50051;
 export const DEFAULT_ORDER_GRPC_PORT = 50052;
+export const DEFAULT_PRODUCT_GRPC_PORT = 50053;
 
 export const DEFAULT_AUTH_GRPC_URL = `0.0.0.0:${DEFAULT_AUTH_GRPC_PORT}`;
 export const DEFAULT_ORDER_GRPC_URL = `0.0.0.0:${DEFAULT_ORDER_GRPC_PORT}`;
@@ -43,4 +45,8 @@ export function getUserProtoPath(): string {
 
 export function getOrderProtoPath(): string {
   return resolveProtoPath('order.proto');
+}
+
+export function getProductProtoPath(): string {
+    return resolveProtoPath('product.proto');
 }

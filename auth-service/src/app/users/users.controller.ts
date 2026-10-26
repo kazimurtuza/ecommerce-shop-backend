@@ -1,19 +1,9 @@
 import { Controller } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 import { UsersService } from './users.service';
-import type {
-  CreateUserRequest,
-  UpdateUserRequest,
-  GetUserByIdRequest,
-  GetUserByEmailRequest,
-  GetUserByPhoneRequest,
-  VerifyUserRequest,
-  UserResponse,
-  UserListResponse,
-  User,
-} from '@org/shared';
+import { UserProto } from '@org/shared';
 
-function toGrpcUser(user: any): User {
+function toGrpcUser(user: any): UserProto.User {
   const roleName = user.roles?.[0]?.role?.name || user.role || undefined;
   return {
     id: String(user.id),
@@ -30,7 +20,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @GrpcMethod('UserService', 'CreateUser')
-  async createUser(data: CreateUserRequest): Promise<UserResponse> {
+  async createUser(data: UserProto.CreateUserRequest): Promise<UserProto.UserResponse> {
     try {
       const result = await this.usersService.createUser(data);
       return {
@@ -47,7 +37,7 @@ export class UsersController {
   }
 
   @GrpcMethod('UserService', 'GetAllUsers')
-  async getAllUsers(): Promise<UserListResponse> {
+  async getAllUsers(): Promise<UserProto.UserListResponse> {
     try {
       const users = await this.usersService.findAll();
       return {
@@ -63,7 +53,7 @@ export class UsersController {
   }
 
   @GrpcMethod('UserService', 'GetUserById')
-  async getUserById(data: GetUserByIdRequest): Promise<UserResponse> {
+  async getUserById(data: UserProto.GetUserByIdRequest): Promise<UserProto.UserResponse> {
     try {
       const user = await this.usersService.findById(data.id);
       if (!user) {
@@ -79,7 +69,7 @@ export class UsersController {
   }
 
   @GrpcMethod('UserService', 'GetUserByEmail')
-  async getUserByEmail(data: GetUserByEmailRequest): Promise<UserResponse> {
+  async getUserByEmail(data: UserProto.GetUserByEmailRequest): Promise<UserProto.UserResponse> {
     try {
       const user = await this.usersService.findByEmail(data.email);
       if (!user) {
@@ -95,7 +85,7 @@ export class UsersController {
   }
 
   @GrpcMethod('UserService', 'GetUserByPhone')
-  async getUserByPhone(data: GetUserByPhoneRequest): Promise<UserResponse> {
+  async getUserByPhone(data: UserProto.GetUserByPhoneRequest): Promise<UserProto.UserResponse> {
     try {
       const user = await this.usersService.findByPhone(data.phone);
       if (!user) {
@@ -111,13 +101,9 @@ export class UsersController {
   }
 
   @GrpcMethod('UserService', 'UpdateUser')
-  async updateUser(data: UpdateUserRequest): Promise<UserResponse> {
+  async updateUser(data: UserProto.UpdateUserRequest): Promise<UserProto.UserResponse> {
     try {
-      const updated = await this.usersService.updateUser(data.id, {
-        name: data.name,
-        phone: data.phone,
-        status: data.status,
-      });
+      const updated = await this.usersService.updateUser(data.id, data);
       return {
         success: true,
         data: toGrpcUser(updated),
@@ -128,7 +114,7 @@ export class UsersController {
   }
 
   @GrpcMethod('UserService', 'VerifyEmail')
-  async verifyEmail(data: VerifyUserRequest): Promise<UserResponse> {
+  async verifyEmail(data: UserProto.VerifyUserRequest): Promise<UserProto.UserResponse> {
     try {
       const updated = await this.usersService.verifyEmail(data.id);
       return {
@@ -141,7 +127,7 @@ export class UsersController {
   }
 
   @GrpcMethod('UserService', 'VerifyPhone')
-  async verifyPhone(data: VerifyUserRequest): Promise<UserResponse> {
+  async verifyPhone(data: UserProto.VerifyUserRequest): Promise<UserProto.UserResponse> {
     try {
       const updated = await this.usersService.verifyPhone(data.id);
       return {

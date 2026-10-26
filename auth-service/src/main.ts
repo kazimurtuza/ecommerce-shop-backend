@@ -2,7 +2,8 @@
  * This is not a production server yet!
  * This is only a minimal backend to get started.
  */
-import 'dotenv/config';
+import * as dotenv from 'dotenv';
+dotenv.config({ override: true });
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
 import { Transport, MicroserviceOptions } from '@nestjs/microservices';

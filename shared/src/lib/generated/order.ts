@@ -9,25 +9,25 @@ import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
 import { Observable } from "rxjs";
 
 export interface CreateOrderRequest {
-  user_id: number;
+  userId: number;
   item: string;
   amount: number;
 }
 
 export interface CreateOrderResponse {
-  order_id: string;
+  orderId: string;
   status: string;
   message: string;
   user: string;
 }
 
 export interface GetOrderRequest {
-  order_id: string;
+  orderId: string;
 }
 
 export interface GetOrderResponse {
-  order_id: string;
-  user_id: number;
+  orderId: string;
+  userId: number;
   status: string;
   amount: number;
 }

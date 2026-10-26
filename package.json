@@ -39,7 +39,8 @@
     "order-service",
     "order-service-e2e",
     "shared",
-    "api-gateway"
+    "api-gateway",
+    "product-service"
   ],
   "dependencies": {
     "@grpc/grpc-js": "^1.14.5",

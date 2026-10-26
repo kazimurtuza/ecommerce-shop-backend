@@ -6,16 +6,7 @@ import { OtpService } from './otp/otp.service';
 import { UsersService } from './users/users.service';
 import { CredentialsService } from './credentials/credentials.service';
 import { SessionsService } from './sessions/sessions.service';
-import {
-  RegisterRequest,
-  SendOtpRequest,
-  SendOtpResponse,
-  VerifyOtpRequest,
-  EmailLoginRequest,
-  AuthTokenResponse,
-  ValidateUserRequest,
-  ValidateUserResponse,
-} from '@org/shared';
+import { AuthProto } from '@org/shared';
 
 @Injectable()
 export class AppService {
@@ -32,7 +23,7 @@ export class AppService {
     return crypto.createHash('sha256').update(password).digest('hex');
   }
 
-  async phoneRegister(data: RegisterRequest): Promise<AuthTokenResponse> {
+  async phoneRegister(data: AuthProto.RegisterRequest): Promise<AuthProto.AuthTokenResponse> {
     try {
       if (!data.phone) {
         return {
@@ -94,7 +85,7 @@ export class AppService {
             phone: user.phone,
             status: user.status,
           },
-        } as AuthTokenResponse;
+        } as AuthProto.AuthTokenResponse;
       }
 
       // If phone already exists, send OTP for login
@@ -150,7 +141,7 @@ export class AppService {
     }
   }
 
-  async mailRegister(data: RegisterRequest): Promise<AuthTokenResponse> {
+  async mailRegister(data: AuthProto.RegisterRequest): Promise<AuthProto.AuthTokenResponse> {
     try {
       if (!data.email) {
         return {
@@ -211,7 +202,7 @@ export class AppService {
     }
   }
 
-  async register(data: RegisterRequest): Promise<AuthTokenResponse> {
+  async register(data: AuthProto.RegisterRequest): Promise<AuthProto.AuthTokenResponse> {
     if (data.phone) {
       return this.phoneRegister(data);
     }
@@ -224,7 +215,7 @@ export class AppService {
     };
   }
 
-  async sendOtp(data: SendOtpRequest): Promise<SendOtpResponse> {
+  async sendOtp(data: AuthProto.SendOtpRequest): Promise<AuthProto.SendOtpResponse> {
     try {
       if (!data.phone) {
         return {
@@ -267,7 +258,7 @@ export class AppService {
     }
   }
 
-  async verifyOtp(data: VerifyOtpRequest): Promise<AuthTokenResponse> {
+  async verifyOtp(data: AuthProto.VerifyOtpRequest): Promise<AuthProto.AuthTokenResponse> {
     try {
       const result = await this.otpService.verifyOtp({
         phone: data.phone,
@@ -338,7 +329,7 @@ export class AppService {
     }
   }
 
-  async loginWithEmail(data: EmailLoginRequest): Promise<AuthTokenResponse> {
+  async loginWithEmail(data: AuthProto.EmailLoginRequest): Promise<AuthProto.AuthTokenResponse> {
     try {
       const user = await this.usersService.findByEmail(data.email);
       if (!user) {
@@ -401,7 +392,7 @@ export class AppService {
     }
   }
 
-  async validateUser(data: ValidateUserRequest): Promise<ValidateUserResponse> {
+  async validateUser(data: AuthProto.ValidateUserRequest): Promise<AuthProto.ValidateUserResponse> {
     const user = await this.usersService.findById(data.user_id);
     if (user) {
       return {

@@ -20,6 +20,9 @@
     },
     {
       "path": "./api-gateway"
+    },
+    {
+      "path": "./product-service"
     }
   ],
   "compilerOptions": {}

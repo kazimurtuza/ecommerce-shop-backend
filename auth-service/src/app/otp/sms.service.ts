@@ -1,5 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import axios from 'axios';
+import * as dotenv from 'dotenv';
 
 export interface SendSmsResult {
   success: boolean;
@@ -13,14 +14,23 @@ export class SmsService {
   private readonly logger = new Logger(SmsService.name);
 
   private get apiKey(): string | undefined {
+    if (!process.env.SMS_API_KEY) {
+      dotenv.config({ override: true });
+    }
     return process.env.SMS_API_KEY;
   }
 
   private get senderId(): string | undefined {
+    if (!process.env.SMS_SENDER_ID) {
+      dotenv.config({ override: true });
+    }
     return process.env.SMS_SENDER_ID;
   }
 
   private get gatewayUrl(): string | undefined {
+    if (!process.env.SMS_GATEWAY_URL) {
+      dotenv.config({ override: true });
+    }
     return process.env.SMS_GATEWAY_URL;
   }
 
@@ -28,7 +38,9 @@ export class SmsService {
    * Check if SMS gateway is properly configured in .env
    */
   isConfigured(): boolean {
-    return Boolean(this.apiKey && this.gatewayUrl);
+    if (!this.apiKey || !this.gatewayUrl) return false;
+    if (this.gatewayUrl.includes('bulksmsbd') && !this.senderId) return false;
+    return true;
   }
 
   /**
@@ -114,7 +126,7 @@ export class SmsService {
    */
   async sendSms(to: string, message: string): Promise<SendSmsResult> {
     const formattedPhone = this.formatPhoneNumber(to);
-    const { apiKey, gatewayUrl } = this;
+    const { apiKey, gatewayUrl, senderId } = this;
 
     if (!apiKey || !gatewayUrl) {
       this.logger.warn(
@@ -126,12 +138,22 @@ export class SmsService {
       };
     }
 
+    if (gatewayUrl.includes('bulksmsbd') && !senderId) {
+      this.logger.warn(
+        `[SmsService] SMS_SENDER_ID is missing in .env for BulkSMSBD gateway. SMS cannot be sent to ${formattedPhone}.`
+      );
+      return {
+        success: false,
+        message: 'SMS_SENDER_ID is required for BulkSMSBD in .env',
+      };
+    }
+
     try {
       this.logger.log(`[SmsService] Sending SMS to ${formattedPhone}`);
 
       const params = this.buildPayload(formattedPhone, message);
 
-      const response = await axios.post(gatewayUrl, params, {
+      const response = await axios.post(gatewayUrl, params.toString(), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
