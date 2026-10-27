@@ -11,6 +11,36 @@ service ProductService {
   rpc GetAllProducts (GetAllProductsRequest) returns (ProductListResponse);
   rpc UpdateProduct (UpdateProductRequest) returns (ProductResponse);
   rpc DeleteProduct (DeleteProductRequest) returns (DeleteProductResponse);
+
+  rpc CreateProductVariant (CreateProductVariantRequest) returns (ProductVariantResponse);
+  rpc GetProductVariants (GetProductVariantsRequest) returns (ProductVariantListResponse);
+  rpc UpdateProductVariant (UpdateProductVariantRequest) returns (ProductVariantResponse);
+  rpc DeleteProductVariant (DeleteProductVariantRequest) returns (DeleteResponse);
+
+  rpc CreateCategory (CreateCategoryRequest) returns (CategoryResponse);
+  rpc GetCategoryById (GetCategoryByIdRequest) returns (CategoryResponse);
+  rpc GetAllCategories (GetAllCategoriesRequest) returns (CategoryListResponse);
+  rpc UpdateCategory (UpdateCategoryRequest) returns (CategoryResponse);
+  rpc DeleteCategory (DeleteCategoryRequest) returns (DeleteResponse);
+
+  rpc CreateBrand (CreateBrandRequest) returns (BrandResponse);
+  rpc GetBrandById (GetBrandByIdRequest) returns (BrandResponse);
+  rpc GetAllBrands (GetAllBrandsRequest) returns (BrandListResponse);
+  rpc UpdateBrand (UpdateBrandRequest) returns (BrandResponse);
+  rpc DeleteBrand (DeleteBrandRequest) returns (DeleteResponse);
+
+  rpc CreateAttribute (CreateAttributeRequest) returns (AttributeResponse);
+  rpc GetAllAttributes (Empty) returns (AttributeListResponse);
+  rpc UpdateAttribute (UpdateAttributeRequest) returns (AttributeResponse);
+  rpc DeleteAttribute (DeleteAttributeRequest) returns (DeleteResponse);
+  rpc CreateAttributeValue (CreateAttributeValueRequest) returns (AttributeValueResponse);
+  rpc UpdateAttributeValue (UpdateAttributeValueRequest) returns (AttributeValueResponse);
+  rpc DeleteAttributeValue (DeleteAttributeValueRequest) returns (DeleteResponse);
+
+  rpc CreateProductImage (CreateProductImageRequest) returns (ProductImageResponse);
+  rpc GetProductImages (GetProductImagesRequest) returns (ProductImageListResponse);
+  rpc UpdateProductImage (UpdateProductImageRequest) returns (ProductImageResponse);
+  rpc DeleteProductImage (DeleteProductImageRequest) returns (DeleteResponse);
 }
 
 // ==================== ENUMS ====================
@@ -43,7 +73,7 @@ message CreateProductRequest {
   string category_id = 4;
   string brand_id = 5;
   ProductStatus status = 6;
-  repeated ProductVariant variants = 7;
+  repeated ProductVariantInput variants = 7;
 }
 
 message GetProductByIdRequest {
@@ -107,6 +137,8 @@ message ProductVariant {
   bool is_default = 10;
   bool is_active = 11;
   repeated VariantAttribute attributes = 12;
+  string created_at = 13;
+  string updated_at = 14;
 }
 
 message VariantAttribute {
@@ -114,6 +146,20 @@ message VariantAttribute {
   string attribute_name = 2;
   string attribute_value_id = 3;
   string attribute_value = 4;
+  string id = 5;
+  string variant_id = 6;
+}
+
+message ProductVariantInput {
+  string sku = 1;
+  string barcode = 2;
+  string price = 3;
+  string sale_price = 4;
+  string cost_price = 5;
+  string img_link = 6;
+  string discount_amount = 7;
+  bool is_default = 8;
+  repeated VariantAttributeInput attributes = 9;
 }
 
 message CreateProductVariantRequest {
@@ -126,6 +172,7 @@ message CreateProductVariantRequest {
   string img_link = 7;
   bool is_default = 8;
   repeated VariantAttributeInput attributes = 9;
+  string discount_amount = 10;
 }
 
 message VariantAttributeInput {
@@ -133,11 +180,173 @@ message VariantAttributeInput {
   string attribute_value_id = 2;
 }
 
+message ProductVariantResponse {
+  bool success = 1;
+  string message = 2;
+  ProductVariant variant = 3;
+}
+
+// Kept for compatibility with code generated from the earlier proto version.
 message CreateProductVariantResponse {
   bool success = 1;
   string message = 2;
   ProductVariant variant = 3;
 }
+
+message GetProductVariantsRequest {
+  string product_id = 1;
+}
+
+message ProductVariantListResponse {
+  bool success = 1;
+  repeated ProductVariant variants = 2;
+}
+
+message UpdateProductVariantRequest {
+  string id = 1;
+  optional string sku = 2;
+  optional string barcode = 3;
+  optional string price = 4;
+  optional string sale_price = 5;
+  optional string cost_price = 6;
+  optional string img_link = 7;
+  optional string discount_amount = 8;
+  optional bool is_default = 9;
+  repeated VariantAttributeInput attributes = 10;
+}
+
+message DeleteProductVariantRequest {
+  string id = 1;
+}
+
+// ==================== CATEGORIES ====================
+message Category {
+  string id = 1;
+  optional string parent_id = 2;
+  string name = 3;
+  string slug = 4;
+  string description = 5;
+  string image = 6;
+  ProductStatus status = 7;
+  int32 sort_order = 8;
+  string created_at = 9;
+  string updated_at = 10;
+  repeated Category children = 11;
+}
+
+message CreateCategoryRequest {
+  optional string parent_id = 1;
+  string name = 2;
+  string slug = 3;
+  string description = 4;
+  string image = 5;
+  ProductStatus status = 6;
+  int32 sort_order = 7;
+}
+
+message GetCategoryByIdRequest { string id = 1; }
+message GetAllCategoriesRequest {
+  optional string parent_id = 1;
+  bool include_children = 2;
+  ProductStatus status = 3;
+}
+
+message UpdateCategoryRequest {
+  string id = 1;
+  optional string parent_id = 2;
+  optional string name = 3;
+  optional string slug = 4;
+  optional string description = 5;
+  optional string image = 6;
+  optional ProductStatus status = 7;
+  optional int32 sort_order = 8;
+}
+message DeleteCategoryRequest { string id = 1; }
+message CategoryResponse { bool success = 1; string message = 2; Category category = 3; }
+message CategoryListResponse { bool success = 1; repeated Category categories = 2; }
+
+// ==================== BRANDS ====================
+message Brand {
+  string id = 1;
+  string name = 2;
+  string slug = 3;
+  string logo = 4;
+  string description = 5;
+  ProductStatus status = 6;
+  string created_at = 7;
+  string updated_at = 8;
+}
+message CreateBrandRequest {
+  string name = 1;
+  string slug = 2;
+  string logo = 3;
+  string description = 4;
+  ProductStatus status = 5;
+}
+message GetBrandByIdRequest { string id = 1; }
+message GetAllBrandsRequest { ProductStatus status = 1; int32 page = 2; int32 limit = 3; string search = 4; }
+message UpdateBrandRequest {
+  string id = 1;
+  optional string name = 2;
+  optional string slug = 3;
+  optional string logo = 4;
+  optional string description = 5;
+  optional ProductStatus status = 6;
+}
+message DeleteBrandRequest { string id = 1; }
+message BrandResponse { bool success = 1; string message = 2; Brand brand = 3; }
+message BrandListResponse { bool success = 1; repeated Brand brands = 2; int32 total = 3; int32 page = 4; int32 limit = 5; }
+
+// ==================== ATTRIBUTES ====================
+message Attribute {
+  string id = 1;
+  string name = 2;
+  repeated AttributeValue values = 3;
+}
+message AttributeValue { string id = 1; string attribute_id = 2; string value = 3; }
+message CreateAttributeRequest { string name = 1; repeated string values = 2; }
+message UpdateAttributeRequest { string id = 1; optional string name = 2; repeated string values = 3; }
+message DeleteAttributeRequest { string id = 1; }
+message CreateAttributeValueRequest { string attribute_id = 1; string value = 2; }
+message UpdateAttributeValueRequest { string id = 1; optional string value = 2; }
+message DeleteAttributeValueRequest { string id = 1; }
+message AttributeResponse { bool success = 1; string message = 2; Attribute attribute = 3; }
+message AttributeListResponse { bool success = 1; repeated Attribute attributes = 2; }
+message AttributeValueResponse { bool success = 1; string message = 2; AttributeValue value = 3; }
+
+// ==================== PRODUCT IMAGES ====================
+message ProductImage {
+  string id = 1;
+  string product_id = 2;
+  optional string variant_id = 3;
+  string image_url = 4;
+  optional string alt_text = 5;
+  bool is_primary = 6;
+  int32 sort_order = 7;
+  string created_at = 8;
+}
+message CreateProductImageRequest {
+  string product_id = 1;
+  optional string variant_id = 2;
+  string image_url = 3;
+  optional string alt_text = 4;
+  bool is_primary = 5;
+  int32 sort_order = 6;
+}
+message GetProductImagesRequest { string product_id = 1; optional string variant_id = 2; }
+message UpdateProductImageRequest {
+  string id = 1;
+  optional string variant_id = 2;
+  optional string image_url = 3;
+  optional string alt_text = 4;
+  optional bool is_primary = 5;
+  optional int32 sort_order = 6;
+}
+message DeleteProductImageRequest { string id = 1; }
+message ProductImageResponse { bool success = 1; string message = 2; ProductImage image = 3; }
+message ProductImageListResponse { bool success = 1; repeated ProductImage images = 2; }
+
+message DeleteResponse { bool success = 1; string message = 2; }
 
 // ==================== EMPTY ====================
 

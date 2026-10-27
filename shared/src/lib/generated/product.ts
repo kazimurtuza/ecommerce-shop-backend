@@ -37,7 +37,7 @@ export interface CreateProductRequest {
   categoryId: string;
   brandId: string;
   status: ProductStatus;
-  variants: ProductVariant[];
+  variants: ProductVariantInput[];
 }
 
 export interface GetProductByIdRequest {
@@ -99,6 +99,8 @@ export interface ProductVariant {
   isDefault: boolean;
   isActive: boolean;
   attributes: VariantAttribute[];
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface VariantAttribute {
@@ -106,6 +108,20 @@ export interface VariantAttribute {
   attributeName: string;
   attributeValueId: string;
   attributeValue: string;
+  id: string;
+  variantId: string;
+}
+
+export interface ProductVariantInput {
+  sku: string;
+  barcode: string;
+  price: string;
+  salePrice: string;
+  costPrice: string;
+  imgLink: string;
+  discountAmount: string;
+  isDefault: boolean;
+  attributes: VariantAttributeInput[];
 }
 
 export interface CreateProductVariantRequest {
@@ -118,6 +134,7 @@ export interface CreateProductVariantRequest {
   imgLink: string;
   isDefault: boolean;
   attributes: VariantAttributeInput[];
+  discountAmount: string;
 }
 
 export interface VariantAttributeInput {
@@ -125,10 +142,276 @@ export interface VariantAttributeInput {
   attributeValueId: string;
 }
 
+export interface ProductVariantResponse {
+  success: boolean;
+  message: string;
+  variant: ProductVariant | undefined;
+}
+
+/** Kept for compatibility with code generated from the earlier proto version. */
 export interface CreateProductVariantResponse {
   success: boolean;
   message: string;
   variant: ProductVariant | undefined;
+}
+
+export interface GetProductVariantsRequest {
+  productId: string;
+}
+
+export interface ProductVariantListResponse {
+  success: boolean;
+  variants: ProductVariant[];
+}
+
+export interface UpdateProductVariantRequest {
+  id: string;
+  sku?: string | undefined;
+  barcode?: string | undefined;
+  price?: string | undefined;
+  salePrice?: string | undefined;
+  costPrice?: string | undefined;
+  imgLink?: string | undefined;
+  discountAmount?: string | undefined;
+  isDefault?: boolean | undefined;
+  attributes: VariantAttributeInput[];
+}
+
+export interface DeleteProductVariantRequest {
+  id: string;
+}
+
+/** ==================== CATEGORIES ==================== */
+export interface Category {
+  id: string;
+  parentId?: string | undefined;
+  name: string;
+  slug: string;
+  description: string;
+  image: string;
+  status: ProductStatus;
+  sortOrder: number;
+  createdAt: string;
+  updatedAt: string;
+  children: Category[];
+}
+
+export interface CreateCategoryRequest {
+  parentId?: string | undefined;
+  name: string;
+  slug: string;
+  description: string;
+  image: string;
+  status: ProductStatus;
+  sortOrder: number;
+}
+
+export interface GetCategoryByIdRequest {
+  id: string;
+}
+
+export interface GetAllCategoriesRequest {
+  parentId?: string | undefined;
+  includeChildren: boolean;
+  status: ProductStatus;
+}
+
+export interface UpdateCategoryRequest {
+  id: string;
+  parentId?: string | undefined;
+  name?: string | undefined;
+  slug?: string | undefined;
+  description?: string | undefined;
+  image?: string | undefined;
+  status?: ProductStatus | undefined;
+  sortOrder?: number | undefined;
+}
+
+export interface DeleteCategoryRequest {
+  id: string;
+}
+
+export interface CategoryResponse {
+  success: boolean;
+  message: string;
+  category: Category | undefined;
+}
+
+export interface CategoryListResponse {
+  success: boolean;
+  categories: Category[];
+}
+
+/** ==================== BRANDS ==================== */
+export interface Brand {
+  id: string;
+  name: string;
+  slug: string;
+  logo: string;
+  description: string;
+  status: ProductStatus;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateBrandRequest {
+  name: string;
+  slug: string;
+  logo: string;
+  description: string;
+  status: ProductStatus;
+}
+
+export interface GetBrandByIdRequest {
+  id: string;
+}
+
+export interface GetAllBrandsRequest {
+  status: ProductStatus;
+  page: number;
+  limit: number;
+  search: string;
+}
+
+export interface UpdateBrandRequest {
+  id: string;
+  name?: string | undefined;
+  slug?: string | undefined;
+  logo?: string | undefined;
+  description?: string | undefined;
+  status?: ProductStatus | undefined;
+}
+
+export interface DeleteBrandRequest {
+  id: string;
+}
+
+export interface BrandResponse {
+  success: boolean;
+  message: string;
+  brand: Brand | undefined;
+}
+
+export interface BrandListResponse {
+  success: boolean;
+  brands: Brand[];
+  total: number;
+  page: number;
+  limit: number;
+}
+
+/** ==================== ATTRIBUTES ==================== */
+export interface Attribute {
+  id: string;
+  name: string;
+  values: AttributeValue[];
+}
+
+export interface AttributeValue {
+  id: string;
+  attributeId: string;
+  value: string;
+}
+
+export interface CreateAttributeRequest {
+  name: string;
+  values: string[];
+}
+
+export interface UpdateAttributeRequest {
+  id: string;
+  name?: string | undefined;
+  values: string[];
+}
+
+export interface DeleteAttributeRequest {
+  id: string;
+}
+
+export interface CreateAttributeValueRequest {
+  attributeId: string;
+  value: string;
+}
+
+export interface UpdateAttributeValueRequest {
+  id: string;
+  value?: string | undefined;
+}
+
+export interface DeleteAttributeValueRequest {
+  id: string;
+}
+
+export interface AttributeResponse {
+  success: boolean;
+  message: string;
+  attribute: Attribute | undefined;
+}
+
+export interface AttributeListResponse {
+  success: boolean;
+  attributes: Attribute[];
+}
+
+export interface AttributeValueResponse {
+  success: boolean;
+  message: string;
+  value: AttributeValue | undefined;
+}
+
+/** ==================== PRODUCT IMAGES ==================== */
+export interface ProductImage {
+  id: string;
+  productId: string;
+  variantId?: string | undefined;
+  imageUrl: string;
+  altText?: string | undefined;
+  isPrimary: boolean;
+  sortOrder: number;
+  createdAt: string;
+}
+
+export interface CreateProductImageRequest {
+  productId: string;
+  variantId?: string | undefined;
+  imageUrl: string;
+  altText?: string | undefined;
+  isPrimary: boolean;
+  sortOrder: number;
+}
+
+export interface GetProductImagesRequest {
+  productId: string;
+  variantId?: string | undefined;
+}
+
+export interface UpdateProductImageRequest {
+  id: string;
+  variantId?: string | undefined;
+  imageUrl?: string | undefined;
+  altText?: string | undefined;
+  isPrimary?: boolean | undefined;
+  sortOrder?: number | undefined;
+}
+
+export interface DeleteProductImageRequest {
+  id: string;
+}
+
+export interface ProductImageResponse {
+  success: boolean;
+  message: string;
+  image: ProductImage | undefined;
+}
+
+export interface ProductImageListResponse {
+  success: boolean;
+  images: ProductImage[];
+}
+
+export interface DeleteResponse {
+  success: boolean;
+  message: string;
 }
 
 export interface Empty {
@@ -144,6 +427,56 @@ export interface ProductServiceClient {
   updateProduct(request: UpdateProductRequest): Observable<ProductResponse>;
 
   deleteProduct(request: DeleteProductRequest): Observable<DeleteProductResponse>;
+
+  createProductVariant(request: CreateProductVariantRequest): Observable<ProductVariantResponse>;
+
+  getProductVariants(request: GetProductVariantsRequest): Observable<ProductVariantListResponse>;
+
+  updateProductVariant(request: UpdateProductVariantRequest): Observable<ProductVariantResponse>;
+
+  deleteProductVariant(request: DeleteProductVariantRequest): Observable<DeleteResponse>;
+
+  createCategory(request: CreateCategoryRequest): Observable<CategoryResponse>;
+
+  getCategoryById(request: GetCategoryByIdRequest): Observable<CategoryResponse>;
+
+  getAllCategories(request: GetAllCategoriesRequest): Observable<CategoryListResponse>;
+
+  updateCategory(request: UpdateCategoryRequest): Observable<CategoryResponse>;
+
+  deleteCategory(request: DeleteCategoryRequest): Observable<DeleteResponse>;
+
+  createBrand(request: CreateBrandRequest): Observable<BrandResponse>;
+
+  getBrandById(request: GetBrandByIdRequest): Observable<BrandResponse>;
+
+  getAllBrands(request: GetAllBrandsRequest): Observable<BrandListResponse>;
+
+  updateBrand(request: UpdateBrandRequest): Observable<BrandResponse>;
+
+  deleteBrand(request: DeleteBrandRequest): Observable<DeleteResponse>;
+
+  createAttribute(request: CreateAttributeRequest): Observable<AttributeResponse>;
+
+  getAllAttributes(request: Empty): Observable<AttributeListResponse>;
+
+  updateAttribute(request: UpdateAttributeRequest): Observable<AttributeResponse>;
+
+  deleteAttribute(request: DeleteAttributeRequest): Observable<DeleteResponse>;
+
+  createAttributeValue(request: CreateAttributeValueRequest): Observable<AttributeValueResponse>;
+
+  updateAttributeValue(request: UpdateAttributeValueRequest): Observable<AttributeValueResponse>;
+
+  deleteAttributeValue(request: DeleteAttributeValueRequest): Observable<DeleteResponse>;
+
+  createProductImage(request: CreateProductImageRequest): Observable<ProductImageResponse>;
+
+  getProductImages(request: GetProductImagesRequest): Observable<ProductImageListResponse>;
+
+  updateProductImage(request: UpdateProductImageRequest): Observable<ProductImageResponse>;
+
+  deleteProductImage(request: DeleteProductImageRequest): Observable<DeleteResponse>;
 }
 
 export interface ProductServiceController {
@@ -166,6 +499,96 @@ export interface ProductServiceController {
   deleteProduct(
     request: DeleteProductRequest,
   ): Promise<DeleteProductResponse> | Observable<DeleteProductResponse> | DeleteProductResponse;
+
+  createProductVariant(
+    request: CreateProductVariantRequest,
+  ): Promise<ProductVariantResponse> | Observable<ProductVariantResponse> | ProductVariantResponse;
+
+  getProductVariants(
+    request: GetProductVariantsRequest,
+  ): Promise<ProductVariantListResponse> | Observable<ProductVariantListResponse> | ProductVariantListResponse;
+
+  updateProductVariant(
+    request: UpdateProductVariantRequest,
+  ): Promise<ProductVariantResponse> | Observable<ProductVariantResponse> | ProductVariantResponse;
+
+  deleteProductVariant(
+    request: DeleteProductVariantRequest,
+  ): Promise<DeleteResponse> | Observable<DeleteResponse> | DeleteResponse;
+
+  createCategory(
+    request: CreateCategoryRequest,
+  ): Promise<CategoryResponse> | Observable<CategoryResponse> | CategoryResponse;
+
+  getCategoryById(
+    request: GetCategoryByIdRequest,
+  ): Promise<CategoryResponse> | Observable<CategoryResponse> | CategoryResponse;
+
+  getAllCategories(
+    request: GetAllCategoriesRequest,
+  ): Promise<CategoryListResponse> | Observable<CategoryListResponse> | CategoryListResponse;
+
+  updateCategory(
+    request: UpdateCategoryRequest,
+  ): Promise<CategoryResponse> | Observable<CategoryResponse> | CategoryResponse;
+
+  deleteCategory(request: DeleteCategoryRequest): Promise<DeleteResponse> | Observable<DeleteResponse> | DeleteResponse;
+
+  createBrand(request: CreateBrandRequest): Promise<BrandResponse> | Observable<BrandResponse> | BrandResponse;
+
+  getBrandById(request: GetBrandByIdRequest): Promise<BrandResponse> | Observable<BrandResponse> | BrandResponse;
+
+  getAllBrands(
+    request: GetAllBrandsRequest,
+  ): Promise<BrandListResponse> | Observable<BrandListResponse> | BrandListResponse;
+
+  updateBrand(request: UpdateBrandRequest): Promise<BrandResponse> | Observable<BrandResponse> | BrandResponse;
+
+  deleteBrand(request: DeleteBrandRequest): Promise<DeleteResponse> | Observable<DeleteResponse> | DeleteResponse;
+
+  createAttribute(
+    request: CreateAttributeRequest,
+  ): Promise<AttributeResponse> | Observable<AttributeResponse> | AttributeResponse;
+
+  getAllAttributes(
+    request: Empty,
+  ): Promise<AttributeListResponse> | Observable<AttributeListResponse> | AttributeListResponse;
+
+  updateAttribute(
+    request: UpdateAttributeRequest,
+  ): Promise<AttributeResponse> | Observable<AttributeResponse> | AttributeResponse;
+
+  deleteAttribute(
+    request: DeleteAttributeRequest,
+  ): Promise<DeleteResponse> | Observable<DeleteResponse> | DeleteResponse;
+
+  createAttributeValue(
+    request: CreateAttributeValueRequest,
+  ): Promise<AttributeValueResponse> | Observable<AttributeValueResponse> | AttributeValueResponse;
+
+  updateAttributeValue(
+    request: UpdateAttributeValueRequest,
+  ): Promise<AttributeValueResponse> | Observable<AttributeValueResponse> | AttributeValueResponse;
+
+  deleteAttributeValue(
+    request: DeleteAttributeValueRequest,
+  ): Promise<DeleteResponse> | Observable<DeleteResponse> | DeleteResponse;
+
+  createProductImage(
+    request: CreateProductImageRequest,
+  ): Promise<ProductImageResponse> | Observable<ProductImageResponse> | ProductImageResponse;
+
+  getProductImages(
+    request: GetProductImagesRequest,
+  ): Promise<ProductImageListResponse> | Observable<ProductImageListResponse> | ProductImageListResponse;
+
+  updateProductImage(
+    request: UpdateProductImageRequest,
+  ): Promise<ProductImageResponse> | Observable<ProductImageResponse> | ProductImageResponse;
+
+  deleteProductImage(
+    request: DeleteProductImageRequest,
+  ): Promise<DeleteResponse> | Observable<DeleteResponse> | DeleteResponse;
 }
 
 export function ProductServiceControllerMethods() {
@@ -176,6 +599,31 @@ export function ProductServiceControllerMethods() {
       "getAllProducts",
       "updateProduct",
       "deleteProduct",
+      "createProductVariant",
+      "getProductVariants",
+      "updateProductVariant",
+      "deleteProductVariant",
+      "createCategory",
+      "getCategoryById",
+      "getAllCategories",
+      "updateCategory",
+      "deleteCategory",
+      "createBrand",
+      "getBrandById",
+      "getAllBrands",
+      "updateBrand",
+      "deleteBrand",
+      "createAttribute",
+      "getAllAttributes",
+      "updateAttribute",
+      "deleteAttribute",
+      "createAttributeValue",
+      "updateAttributeValue",
+      "deleteAttributeValue",
+      "createProductImage",
+      "getProductImages",
+      "updateProductImage",
+      "deleteProductImage",
     ];
     for (const method of grpcMethods) {
       const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
