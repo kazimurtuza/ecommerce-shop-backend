@@ -8,6 +8,44 @@ import { ProductProto } from '@org/shared';
 export class CategoriesService {
   constructor(private readonly prisma: PrismaService) {}
 
+  async getById(id: string) {
+    if (!id?.trim()) {
+      throw new RpcException({ code: status.INVALID_ARGUMENT, message: 'id is required' });
+    }
+
+    const category = await this.prisma.category.findUnique({ where: { id: id.trim() } });
+    if (!category) {
+      throw new RpcException({ code: status.NOT_FOUND, message: `Category "${id}" not found` });
+    }
+    return category;
+  }
+
+  async getMainCategories() {
+    return this.prisma.category.findMany({
+      where: { parent_id: null },
+      orderBy: { sort_order: 'asc' },
+    });
+  }
+
+  async getChildCategories(parentId: string) {
+    if (!parentId?.trim()) {
+      throw new RpcException({ code: status.INVALID_ARGUMENT, message: 'parent_id is required' });
+    }
+
+    const parent = await this.prisma.category.findUnique({
+      where: { id: parentId.trim() },
+      select: { id: true },
+    });
+    if (!parent) {
+      throw new RpcException({ code: status.NOT_FOUND, message: `Parent category "${parentId}" not found` });
+    }
+
+    return this.prisma.category.findMany({
+      where: { parent_id: parentId.trim() },
+      orderBy: { sort_order: 'asc' },
+    });
+  }
+
   async create(dto: ProductProto.CreateCategoryRequest) {
     if (!dto.name?.trim() || !dto.slug?.trim()) {
       throw new RpcException({ code: status.INVALID_ARGUMENT, message: 'name and slug are required' });

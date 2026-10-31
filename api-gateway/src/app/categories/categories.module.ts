@@ -13,7 +13,7 @@ import { CategoriesService } from './categories.service';
         options: {
           package: PRODUCT_PACKAGE,
           protoPath: getProductProtoPath(),
-          url: process.env.PRODUCT_GRPC_URL || 'localhost:50053',
+          url: process.env.PRODUCT_GRPC_URL || 'localhost:4002',
         },
       },
     ]),

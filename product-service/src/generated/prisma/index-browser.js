@@ -133,9 +133,28 @@ exports.Prisma.CategoryScalarFieldEnum = {
   updated_at: 'updated_at'
 };
 
+exports.Prisma.AttributeScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  input_type: 'input_type'
+};
+
+exports.Prisma.AttributeValueScalarFieldEnum = {
+  id: 'id',
+  attribute_id: 'attribute_id',
+  value: 'value',
+  metadata: 'metadata'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.QueryMode = {
@@ -148,9 +167,17 @@ exports.Prisma.NullsOrder = {
   last: 'last'
 };
 
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
+};
+
 
 exports.Prisma.ModelName = {
-  Category: 'Category'
+  Category: 'Category',
+  Attribute: 'Attribute',
+  AttributeValue: 'AttributeValue'
 };
 
 /**

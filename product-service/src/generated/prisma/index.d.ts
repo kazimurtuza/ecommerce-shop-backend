@@ -15,9 +15,19 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
 /**
  * Model Category
- * 
+ *
  */
 export type Category = $Result.DefaultSelection<Prisma.$CategoryPayload>
+/**
+ * Model Attribute
+ *
+ */
+export type Attribute = $Result.DefaultSelection<Prisma.$AttributePayload>
+/**
+ * Model AttributeValue
+ *
+ */
+export type AttributeValue = $Result.DefaultSelection<Prisma.$AttributeValuePayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -129,7 +139,7 @@ export class PrismaClient<
    *   prisma.user.create({ data: { name: 'Alice' } }),
    * ])
    * ```
-   * 
+   *
    * Read more in our [docs](https://www.prisma.io/docs/orm/prisma-client/queries/transactions).
    */
   $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
@@ -149,6 +159,26 @@ export class PrismaClient<
     * ```
     */
   get category(): Prisma.CategoryDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.attribute`: Exposes CRUD operations for the **Attribute** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Attributes
+    * const attributes = await prisma.attribute.findMany()
+    * ```
+    */
+  get attribute(): Prisma.AttributeDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.attributeValue`: Exposes CRUD operations for the **AttributeValue** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AttributeValues
+    * const attributeValues = await prisma.attributeValue.findMany()
+    * ```
+    */
+  get attributeValue(): Prisma.AttributeValueDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -596,7 +626,9 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    Category: 'Category'
+    Category: 'Category',
+    Attribute: 'Attribute',
+    AttributeValue: 'AttributeValue'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -612,7 +644,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "category"
+      modelProps: "category" | "attribute" | "attributeValue"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -690,6 +722,154 @@ export namespace Prisma {
           }
         }
       }
+      Attribute: {
+        payload: Prisma.$AttributePayload<ExtArgs>
+        fields: Prisma.AttributeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AttributeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AttributePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AttributeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AttributePayload>
+          }
+          findFirst: {
+            args: Prisma.AttributeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AttributePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AttributeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AttributePayload>
+          }
+          findMany: {
+            args: Prisma.AttributeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AttributePayload>[]
+          }
+          create: {
+            args: Prisma.AttributeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AttributePayload>
+          }
+          createMany: {
+            args: Prisma.AttributeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AttributeCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AttributePayload>[]
+          }
+          delete: {
+            args: Prisma.AttributeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AttributePayload>
+          }
+          update: {
+            args: Prisma.AttributeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AttributePayload>
+          }
+          deleteMany: {
+            args: Prisma.AttributeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AttributeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AttributeUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AttributePayload>[]
+          }
+          upsert: {
+            args: Prisma.AttributeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AttributePayload>
+          }
+          aggregate: {
+            args: Prisma.AttributeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAttribute>
+          }
+          groupBy: {
+            args: Prisma.AttributeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AttributeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AttributeCountArgs<ExtArgs>
+            result: $Utils.Optional<AttributeCountAggregateOutputType> | number
+          }
+        }
+      }
+      AttributeValue: {
+        payload: Prisma.$AttributeValuePayload<ExtArgs>
+        fields: Prisma.AttributeValueFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AttributeValueFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AttributeValuePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AttributeValueFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AttributeValuePayload>
+          }
+          findFirst: {
+            args: Prisma.AttributeValueFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AttributeValuePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AttributeValueFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AttributeValuePayload>
+          }
+          findMany: {
+            args: Prisma.AttributeValueFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AttributeValuePayload>[]
+          }
+          create: {
+            args: Prisma.AttributeValueCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AttributeValuePayload>
+          }
+          createMany: {
+            args: Prisma.AttributeValueCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AttributeValueCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AttributeValuePayload>[]
+          }
+          delete: {
+            args: Prisma.AttributeValueDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AttributeValuePayload>
+          }
+          update: {
+            args: Prisma.AttributeValueUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AttributeValuePayload>
+          }
+          deleteMany: {
+            args: Prisma.AttributeValueDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AttributeValueUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AttributeValueUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AttributeValuePayload>[]
+          }
+          upsert: {
+            args: Prisma.AttributeValueUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AttributeValuePayload>
+          }
+          aggregate: {
+            args: Prisma.AttributeValueAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAttributeValue>
+          }
+          groupBy: {
+            args: Prisma.AttributeValueGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AttributeValueGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AttributeValueCountArgs<ExtArgs>
+            result: $Utils.Optional<AttributeValueCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -727,7 +907,7 @@ export namespace Prisma {
      * ```
      * // Shorthand for `emit: 'stdout'`
      * log: ['query', 'info', 'warn', 'error']
-     * 
+     *
      * // Emit as events only
      * log: [
      *   { emit: 'event', level: 'query' },
@@ -735,14 +915,14 @@ export namespace Prisma {
      *   { emit: 'event', level: 'warn' }
      *   { emit: 'event', level: 'error' }
      * ]
-     * 
+     *
      * / Emit as events and log to stdout
      * og: [
      *  { emit: 'stdout', level: 'query' },
      *  { emit: 'stdout', level: 'info' },
      *  { emit: 'stdout', level: 'warn' }
      *  { emit: 'stdout', level: 'error' }
-     * 
+     *
      * ```
      * Read more in our [docs](https://pris.ly/d/logging).
      */
@@ -759,16 +939,16 @@ export namespace Prisma {
     }
     /**
      * A driver adapter that PrismaClient uses to connect to your database, such as the ones provided by `@prisma/adapter-pg`, `@prisma/adapter-libsql`, `@prisma/adapter-planetscale`, etc.
-     * 
+     *
      * A driver adapter is **required** unless you connect to your database through Prisma Accelerate (in which case use `accelerateUrl` instead).
-     * 
+     *
      * Learn more: https://pris.ly/d/driver-adapters
-     * 
+     *
      * @example
      * ```ts
      * import { PrismaPg } from '@prisma/adapter-pg'
      * import { PrismaClient } from './generated/prisma/client'
-     * 
+     *
      * const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL })
      * const prisma = new PrismaClient({ adapter })
      * ```
@@ -776,13 +956,13 @@ export namespace Prisma {
     adapter?: runtime.SqlDriverAdapterFactory
     /**
      * The Prisma Accelerate connection URL. Use this option to connect to your database through Prisma Accelerate instead of using a driver adapter to connect directly.
-     * 
+     *
      * Learn more: https://pris.ly/d/accelerate
      */
     accelerateUrl?: string
     /**
      * Global configuration for omitting model fields by default.
-     * 
+     *
      * @example
      * ```
      * const prisma = new PrismaClient({
@@ -798,7 +978,7 @@ export namespace Prisma {
     /**
      * SQL commenter plugins that add metadata to SQL queries as comments.
      * Comments follow the sqlcommenter format: https://google.github.io/sqlcommenter/
-     * 
+     *
      * @example
      * ```
      * const prisma = new PrismaClient({
@@ -814,6 +994,8 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     category?: CategoryOmit
+    attribute?: AttributeOmit
+    attributeValue?: AttributeValueOmit
   }
 
   /* Types for Logging */
@@ -917,6 +1099,37 @@ export namespace Prisma {
    */
   export type CategoryCountOutputTypeCountChildrenArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CategoryWhereInput
+  }
+
+
+  /**
+   * Count Type AttributeCountOutputType
+   */
+
+  export type AttributeCountOutputType = {
+    values: number
+  }
+
+  export type AttributeCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    values?: boolean | AttributeCountOutputTypeCountValuesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * AttributeCountOutputType without action
+   */
+  export type AttributeCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AttributeCountOutputType
+     */
+    select?: AttributeCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * AttributeCountOutputType without action
+   */
+  export type AttributeCountOutputTypeCountValuesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AttributeValueWhereInput
   }
 
 
@@ -1040,55 +1253,55 @@ export namespace Prisma {
     where?: CategoryWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Categories to fetch.
      */
     orderBy?: CategoryOrderByWithRelationInput | CategoryOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: CategoryWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Categories from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Categories.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned Categories
     **/
     _count?: true | CategoryCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: CategoryAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: CategorySumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: CategoryMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: CategoryMaxAggregateInputType
@@ -1317,13 +1530,13 @@ export namespace Prisma {
      * @example
      * // Get all Categories
      * const categories = await prisma.category.findMany()
-     * 
+     *
      * // Get first 10 Categories
      * const categories = await prisma.category.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const categoryWithIdOnly = await prisma.category.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends CategoryFindManyArgs>(args?: SelectSubset<T, CategoryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
@@ -1337,7 +1550,7 @@ export namespace Prisma {
      *     // ... data to create a Category
      *   }
      * })
-     * 
+     *
      */
     create<T extends CategoryCreateArgs>(args: SelectSubset<T, CategoryCreateArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -1351,7 +1564,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends CategoryCreateManyArgs>(args?: SelectSubset<T, CategoryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -1365,7 +1578,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many Categories and only return the `id`
      * const categoryWithIdOnly = await prisma.category.createManyAndReturn({
      *   select: { id: true },
@@ -1375,7 +1588,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends CategoryCreateManyAndReturnArgs>(args?: SelectSubset<T, CategoryCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
@@ -1389,7 +1602,7 @@ export namespace Prisma {
      *     // ... filter to delete one Category
      *   }
      * })
-     * 
+     *
      */
     delete<T extends CategoryDeleteArgs>(args: SelectSubset<T, CategoryDeleteArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -1406,7 +1619,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends CategoryUpdateArgs>(args: SelectSubset<T, CategoryUpdateArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
@@ -1420,7 +1633,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends CategoryDeleteManyArgs>(args?: SelectSubset<T, CategoryDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -1439,7 +1652,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends CategoryUpdateManyArgs>(args: SelectSubset<T, CategoryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -1456,7 +1669,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Update zero or more Categories and only return the `id`
      * const categoryWithIdOnly = await prisma.category.updateManyAndReturn({
      *   select: { id: true },
@@ -1469,7 +1682,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     updateManyAndReturn<T extends CategoryUpdateManyAndReturnArgs>(args: SelectSubset<T, CategoryUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -1558,7 +1771,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends CategoryGroupByArgs,
@@ -1674,7 +1887,7 @@ export namespace Prisma {
     readonly created_at: FieldRef<"Category", 'DateTime'>
     readonly updated_at: FieldRef<"Category", 'DateTime'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -1743,31 +1956,31 @@ export namespace Prisma {
     where?: CategoryWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Categories to fetch.
      */
     orderBy?: CategoryOrderByWithRelationInput | CategoryOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for Categories.
      */
     cursor?: CategoryWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Categories from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Categories.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of Categories.
      */
     distinct?: CategoryScalarFieldEnum | CategoryScalarFieldEnum[]
@@ -1795,31 +2008,31 @@ export namespace Prisma {
     where?: CategoryWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Categories to fetch.
      */
     orderBy?: CategoryOrderByWithRelationInput | CategoryOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for Categories.
      */
     cursor?: CategoryWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Categories from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Categories.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of Categories.
      */
     distinct?: CategoryScalarFieldEnum | CategoryScalarFieldEnum[]
@@ -1847,31 +2060,31 @@ export namespace Prisma {
     where?: CategoryWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Categories to fetch.
      */
     orderBy?: CategoryOrderByWithRelationInput | CategoryOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing Categories.
      */
     cursor?: CategoryWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Categories from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Categories.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of Categories.
      */
     distinct?: CategoryScalarFieldEnum | CategoryScalarFieldEnum[]
@@ -2136,6 +2349,2114 @@ export namespace Prisma {
 
 
   /**
+   * Model Attribute
+   */
+
+  export type AggregateAttribute = {
+    _count: AttributeCountAggregateOutputType | null
+    _min: AttributeMinAggregateOutputType | null
+    _max: AttributeMaxAggregateOutputType | null
+  }
+
+  export type AttributeMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    slug: string | null
+    input_type: string | null
+  }
+
+  export type AttributeMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    slug: string | null
+    input_type: string | null
+  }
+
+  export type AttributeCountAggregateOutputType = {
+    id: number
+    name: number
+    slug: number
+    input_type: number
+    _all: number
+  }
+
+
+  export type AttributeMinAggregateInputType = {
+    id?: true
+    name?: true
+    slug?: true
+    input_type?: true
+  }
+
+  export type AttributeMaxAggregateInputType = {
+    id?: true
+    name?: true
+    slug?: true
+    input_type?: true
+  }
+
+  export type AttributeCountAggregateInputType = {
+    id?: true
+    name?: true
+    slug?: true
+    input_type?: true
+    _all?: true
+  }
+
+  export type AttributeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Attribute to aggregate.
+     */
+    where?: AttributeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Attributes to fetch.
+     */
+    orderBy?: AttributeOrderByWithRelationInput | AttributeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the start position
+     */
+    cursor?: AttributeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Attributes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Attributes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Count returned Attributes
+    **/
+    _count?: true | AttributeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the minimum value
+    **/
+    _min?: AttributeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the maximum value
+    **/
+    _max?: AttributeMaxAggregateInputType
+  }
+
+  export type GetAttributeAggregateType<T extends AttributeAggregateArgs> = {
+        [P in keyof T & keyof AggregateAttribute]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAttribute[P]>
+      : GetScalarType<T[P], AggregateAttribute[P]>
+  }
+
+
+
+
+  export type AttributeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AttributeWhereInput
+    orderBy?: AttributeOrderByWithAggregationInput | AttributeOrderByWithAggregationInput[]
+    by: AttributeScalarFieldEnum[] | AttributeScalarFieldEnum
+    having?: AttributeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AttributeCountAggregateInputType | true
+    _min?: AttributeMinAggregateInputType
+    _max?: AttributeMaxAggregateInputType
+  }
+
+  export type AttributeGroupByOutputType = {
+    id: string
+    name: string
+    slug: string
+    input_type: string
+    _count: AttributeCountAggregateOutputType | null
+    _min: AttributeMinAggregateOutputType | null
+    _max: AttributeMaxAggregateOutputType | null
+  }
+
+  type GetAttributeGroupByPayload<T extends AttributeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AttributeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AttributeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AttributeGroupByOutputType[P]>
+            : GetScalarType<T[P], AttributeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AttributeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    input_type?: boolean
+    values?: boolean | Attribute$valuesArgs<ExtArgs>
+    _count?: boolean | AttributeCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["attribute"]>
+
+  export type AttributeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    input_type?: boolean
+  }, ExtArgs["result"]["attribute"]>
+
+  export type AttributeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    input_type?: boolean
+  }, ExtArgs["result"]["attribute"]>
+
+  export type AttributeSelectScalar = {
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    input_type?: boolean
+  }
+
+  export type AttributeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "input_type", ExtArgs["result"]["attribute"]>
+  export type AttributeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    values?: boolean | Attribute$valuesArgs<ExtArgs>
+    _count?: boolean | AttributeCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type AttributeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type AttributeIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $AttributePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Attribute"
+    objects: {
+      values: Prisma.$AttributeValuePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      slug: string
+      input_type: string
+    }, ExtArgs["result"]["attribute"]>
+    composites: {}
+  }
+
+  type AttributeGetPayload<S extends boolean | null | undefined | AttributeDefaultArgs> = $Result.GetResult<Prisma.$AttributePayload, S>
+
+  type AttributeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AttributeFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AttributeCountAggregateInputType | true
+    }
+
+  export interface AttributeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Attribute'], meta: { name: 'Attribute' } }
+    /**
+     * Find zero or one Attribute that matches the filter.
+     * @param {AttributeFindUniqueArgs} args - Arguments to find a Attribute
+     * @example
+     * // Get one Attribute
+     * const attribute = await prisma.attribute.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AttributeFindUniqueArgs>(args: SelectSubset<T, AttributeFindUniqueArgs<ExtArgs>>): Prisma__AttributeClient<$Result.GetResult<Prisma.$AttributePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Attribute that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AttributeFindUniqueOrThrowArgs} args - Arguments to find a Attribute
+     * @example
+     * // Get one Attribute
+     * const attribute = await prisma.attribute.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AttributeFindUniqueOrThrowArgs>(args: SelectSubset<T, AttributeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AttributeClient<$Result.GetResult<Prisma.$AttributePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Attribute that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AttributeFindFirstArgs} args - Arguments to find a Attribute
+     * @example
+     * // Get one Attribute
+     * const attribute = await prisma.attribute.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AttributeFindFirstArgs>(args?: SelectSubset<T, AttributeFindFirstArgs<ExtArgs>>): Prisma__AttributeClient<$Result.GetResult<Prisma.$AttributePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Attribute that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AttributeFindFirstOrThrowArgs} args - Arguments to find a Attribute
+     * @example
+     * // Get one Attribute
+     * const attribute = await prisma.attribute.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AttributeFindFirstOrThrowArgs>(args?: SelectSubset<T, AttributeFindFirstOrThrowArgs<ExtArgs>>): Prisma__AttributeClient<$Result.GetResult<Prisma.$AttributePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Attributes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AttributeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Attributes
+     * const attributes = await prisma.attribute.findMany()
+     *
+     * // Get first 10 Attributes
+     * const attributes = await prisma.attribute.findMany({ take: 10 })
+     *
+     * // Only select the `id`
+     * const attributeWithIdOnly = await prisma.attribute.findMany({ select: { id: true } })
+     *
+     */
+    findMany<T extends AttributeFindManyArgs>(args?: SelectSubset<T, AttributeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AttributePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Attribute.
+     * @param {AttributeCreateArgs} args - Arguments to create a Attribute.
+     * @example
+     * // Create one Attribute
+     * const Attribute = await prisma.attribute.create({
+     *   data: {
+     *     // ... data to create a Attribute
+     *   }
+     * })
+     *
+     */
+    create<T extends AttributeCreateArgs>(args: SelectSubset<T, AttributeCreateArgs<ExtArgs>>): Prisma__AttributeClient<$Result.GetResult<Prisma.$AttributePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Attributes.
+     * @param {AttributeCreateManyArgs} args - Arguments to create many Attributes.
+     * @example
+     * // Create many Attributes
+     * const attribute = await prisma.attribute.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     */
+    createMany<T extends AttributeCreateManyArgs>(args?: SelectSubset<T, AttributeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Attributes and returns the data saved in the database.
+     * @param {AttributeCreateManyAndReturnArgs} args - Arguments to create many Attributes.
+     * @example
+     * // Create many Attributes
+     * const attribute = await prisma.attribute.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Create many Attributes and only return the `id`
+     * const attributeWithIdOnly = await prisma.attribute.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    createManyAndReturn<T extends AttributeCreateManyAndReturnArgs>(args?: SelectSubset<T, AttributeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AttributePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Attribute.
+     * @param {AttributeDeleteArgs} args - Arguments to delete one Attribute.
+     * @example
+     * // Delete one Attribute
+     * const Attribute = await prisma.attribute.delete({
+     *   where: {
+     *     // ... filter to delete one Attribute
+     *   }
+     * })
+     *
+     */
+    delete<T extends AttributeDeleteArgs>(args: SelectSubset<T, AttributeDeleteArgs<ExtArgs>>): Prisma__AttributeClient<$Result.GetResult<Prisma.$AttributePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Attribute.
+     * @param {AttributeUpdateArgs} args - Arguments to update one Attribute.
+     * @example
+     * // Update one Attribute
+     * const attribute = await prisma.attribute.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    update<T extends AttributeUpdateArgs>(args: SelectSubset<T, AttributeUpdateArgs<ExtArgs>>): Prisma__AttributeClient<$Result.GetResult<Prisma.$AttributePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Attributes.
+     * @param {AttributeDeleteManyArgs} args - Arguments to filter Attributes to delete.
+     * @example
+     * // Delete a few Attributes
+     * const { count } = await prisma.attribute.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     *
+     */
+    deleteMany<T extends AttributeDeleteManyArgs>(args?: SelectSubset<T, AttributeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Attributes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AttributeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Attributes
+     * const attribute = await prisma.attribute.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    updateMany<T extends AttributeUpdateManyArgs>(args: SelectSubset<T, AttributeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Attributes and returns the data updated in the database.
+     * @param {AttributeUpdateManyAndReturnArgs} args - Arguments to update many Attributes.
+     * @example
+     * // Update many Attributes
+     * const attribute = await prisma.attribute.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Update zero or more Attributes and only return the `id`
+     * const attributeWithIdOnly = await prisma.attribute.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    updateManyAndReturn<T extends AttributeUpdateManyAndReturnArgs>(args: SelectSubset<T, AttributeUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AttributePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Attribute.
+     * @param {AttributeUpsertArgs} args - Arguments to update or create a Attribute.
+     * @example
+     * // Update or create a Attribute
+     * const attribute = await prisma.attribute.upsert({
+     *   create: {
+     *     // ... data to create a Attribute
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Attribute we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AttributeUpsertArgs>(args: SelectSubset<T, AttributeUpsertArgs<ExtArgs>>): Prisma__AttributeClient<$Result.GetResult<Prisma.$AttributePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Attributes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AttributeCountArgs} args - Arguments to filter Attributes to count.
+     * @example
+     * // Count the number of Attributes
+     * const count = await prisma.attribute.count({
+     *   where: {
+     *     // ... the filter for the Attributes we want to count
+     *   }
+     * })
+    **/
+    count<T extends AttributeCountArgs>(
+      args?: Subset<T, AttributeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AttributeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Attribute.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AttributeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AttributeAggregateArgs>(args: Subset<T, AttributeAggregateArgs>): Prisma.PrismaPromise<GetAttributeAggregateType<T>>
+
+    /**
+     * Group by Attribute.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AttributeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     *
+    **/
+    groupBy<
+      T extends AttributeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AttributeGroupByArgs['orderBy'] }
+        : { orderBy?: AttributeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AttributeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAttributeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Attribute model
+   */
+  readonly fields: AttributeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Attribute.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AttributeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    values<T extends Attribute$valuesArgs<ExtArgs> = {}>(args?: Subset<T, Attribute$valuesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AttributeValuePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Attribute model
+   */
+  interface AttributeFieldRefs {
+    readonly id: FieldRef<"Attribute", 'String'>
+    readonly name: FieldRef<"Attribute", 'String'>
+    readonly slug: FieldRef<"Attribute", 'String'>
+    readonly input_type: FieldRef<"Attribute", 'String'>
+  }
+
+
+  // Custom InputTypes
+  /**
+   * Attribute findUnique
+   */
+  export type AttributeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Attribute
+     */
+    select?: AttributeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Attribute
+     */
+    omit?: AttributeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AttributeInclude<ExtArgs> | null
+    /**
+     * Filter, which Attribute to fetch.
+     */
+    where: AttributeWhereUniqueInput
+  }
+
+  /**
+   * Attribute findUniqueOrThrow
+   */
+  export type AttributeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Attribute
+     */
+    select?: AttributeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Attribute
+     */
+    omit?: AttributeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AttributeInclude<ExtArgs> | null
+    /**
+     * Filter, which Attribute to fetch.
+     */
+    where: AttributeWhereUniqueInput
+  }
+
+  /**
+   * Attribute findFirst
+   */
+  export type AttributeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Attribute
+     */
+    select?: AttributeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Attribute
+     */
+    omit?: AttributeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AttributeInclude<ExtArgs> | null
+    /**
+     * Filter, which Attribute to fetch.
+     */
+    where?: AttributeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Attributes to fetch.
+     */
+    orderBy?: AttributeOrderByWithRelationInput | AttributeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for Attributes.
+     */
+    cursor?: AttributeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Attributes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Attributes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of Attributes.
+     */
+    distinct?: AttributeScalarFieldEnum | AttributeScalarFieldEnum[]
+  }
+
+  /**
+   * Attribute findFirstOrThrow
+   */
+  export type AttributeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Attribute
+     */
+    select?: AttributeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Attribute
+     */
+    omit?: AttributeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AttributeInclude<ExtArgs> | null
+    /**
+     * Filter, which Attribute to fetch.
+     */
+    where?: AttributeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Attributes to fetch.
+     */
+    orderBy?: AttributeOrderByWithRelationInput | AttributeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for Attributes.
+     */
+    cursor?: AttributeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Attributes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Attributes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of Attributes.
+     */
+    distinct?: AttributeScalarFieldEnum | AttributeScalarFieldEnum[]
+  }
+
+  /**
+   * Attribute findMany
+   */
+  export type AttributeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Attribute
+     */
+    select?: AttributeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Attribute
+     */
+    omit?: AttributeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AttributeInclude<ExtArgs> | null
+    /**
+     * Filter, which Attributes to fetch.
+     */
+    where?: AttributeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Attributes to fetch.
+     */
+    orderBy?: AttributeOrderByWithRelationInput | AttributeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for listing Attributes.
+     */
+    cursor?: AttributeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Attributes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Attributes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of Attributes.
+     */
+    distinct?: AttributeScalarFieldEnum | AttributeScalarFieldEnum[]
+  }
+
+  /**
+   * Attribute create
+   */
+  export type AttributeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Attribute
+     */
+    select?: AttributeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Attribute
+     */
+    omit?: AttributeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AttributeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Attribute.
+     */
+    data: XOR<AttributeCreateInput, AttributeUncheckedCreateInput>
+  }
+
+  /**
+   * Attribute createMany
+   */
+  export type AttributeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Attributes.
+     */
+    data: AttributeCreateManyInput | AttributeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Attribute createManyAndReturn
+   */
+  export type AttributeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Attribute
+     */
+    select?: AttributeSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Attribute
+     */
+    omit?: AttributeOmit<ExtArgs> | null
+    /**
+     * The data used to create many Attributes.
+     */
+    data: AttributeCreateManyInput | AttributeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Attribute update
+   */
+  export type AttributeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Attribute
+     */
+    select?: AttributeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Attribute
+     */
+    omit?: AttributeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AttributeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Attribute.
+     */
+    data: XOR<AttributeUpdateInput, AttributeUncheckedUpdateInput>
+    /**
+     * Choose, which Attribute to update.
+     */
+    where: AttributeWhereUniqueInput
+  }
+
+  /**
+   * Attribute updateMany
+   */
+  export type AttributeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Attributes.
+     */
+    data: XOR<AttributeUpdateManyMutationInput, AttributeUncheckedUpdateManyInput>
+    /**
+     * Filter which Attributes to update
+     */
+    where?: AttributeWhereInput
+    /**
+     * Limit how many Attributes to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Attribute updateManyAndReturn
+   */
+  export type AttributeUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Attribute
+     */
+    select?: AttributeSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Attribute
+     */
+    omit?: AttributeOmit<ExtArgs> | null
+    /**
+     * The data used to update Attributes.
+     */
+    data: XOR<AttributeUpdateManyMutationInput, AttributeUncheckedUpdateManyInput>
+    /**
+     * Filter which Attributes to update
+     */
+    where?: AttributeWhereInput
+    /**
+     * Limit how many Attributes to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Attribute upsert
+   */
+  export type AttributeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Attribute
+     */
+    select?: AttributeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Attribute
+     */
+    omit?: AttributeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AttributeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Attribute to update in case it exists.
+     */
+    where: AttributeWhereUniqueInput
+    /**
+     * In case the Attribute found by the `where` argument doesn't exist, create a new Attribute with this data.
+     */
+    create: XOR<AttributeCreateInput, AttributeUncheckedCreateInput>
+    /**
+     * In case the Attribute was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AttributeUpdateInput, AttributeUncheckedUpdateInput>
+  }
+
+  /**
+   * Attribute delete
+   */
+  export type AttributeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Attribute
+     */
+    select?: AttributeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Attribute
+     */
+    omit?: AttributeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AttributeInclude<ExtArgs> | null
+    /**
+     * Filter which Attribute to delete.
+     */
+    where: AttributeWhereUniqueInput
+  }
+
+  /**
+   * Attribute deleteMany
+   */
+  export type AttributeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Attributes to delete
+     */
+    where?: AttributeWhereInput
+    /**
+     * Limit how many Attributes to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Attribute.values
+   */
+  export type Attribute$valuesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AttributeValue
+     */
+    select?: AttributeValueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AttributeValue
+     */
+    omit?: AttributeValueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AttributeValueInclude<ExtArgs> | null
+    where?: AttributeValueWhereInput
+    orderBy?: AttributeValueOrderByWithRelationInput | AttributeValueOrderByWithRelationInput[]
+    cursor?: AttributeValueWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AttributeValueScalarFieldEnum | AttributeValueScalarFieldEnum[]
+  }
+
+  /**
+   * Attribute without action
+   */
+  export type AttributeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Attribute
+     */
+    select?: AttributeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Attribute
+     */
+    omit?: AttributeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AttributeInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AttributeValue
+   */
+
+  export type AggregateAttributeValue = {
+    _count: AttributeValueCountAggregateOutputType | null
+    _min: AttributeValueMinAggregateOutputType | null
+    _max: AttributeValueMaxAggregateOutputType | null
+  }
+
+  export type AttributeValueMinAggregateOutputType = {
+    id: string | null
+    attribute_id: string | null
+    value: string | null
+  }
+
+  export type AttributeValueMaxAggregateOutputType = {
+    id: string | null
+    attribute_id: string | null
+    value: string | null
+  }
+
+  export type AttributeValueCountAggregateOutputType = {
+    id: number
+    attribute_id: number
+    value: number
+    metadata: number
+    _all: number
+  }
+
+
+  export type AttributeValueMinAggregateInputType = {
+    id?: true
+    attribute_id?: true
+    value?: true
+  }
+
+  export type AttributeValueMaxAggregateInputType = {
+    id?: true
+    attribute_id?: true
+    value?: true
+  }
+
+  export type AttributeValueCountAggregateInputType = {
+    id?: true
+    attribute_id?: true
+    value?: true
+    metadata?: true
+    _all?: true
+  }
+
+  export type AttributeValueAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AttributeValue to aggregate.
+     */
+    where?: AttributeValueWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of AttributeValues to fetch.
+     */
+    orderBy?: AttributeValueOrderByWithRelationInput | AttributeValueOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the start position
+     */
+    cursor?: AttributeValueWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` AttributeValues from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` AttributeValues.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Count returned AttributeValues
+    **/
+    _count?: true | AttributeValueCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the minimum value
+    **/
+    _min?: AttributeValueMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the maximum value
+    **/
+    _max?: AttributeValueMaxAggregateInputType
+  }
+
+  export type GetAttributeValueAggregateType<T extends AttributeValueAggregateArgs> = {
+        [P in keyof T & keyof AggregateAttributeValue]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAttributeValue[P]>
+      : GetScalarType<T[P], AggregateAttributeValue[P]>
+  }
+
+
+
+
+  export type AttributeValueGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AttributeValueWhereInput
+    orderBy?: AttributeValueOrderByWithAggregationInput | AttributeValueOrderByWithAggregationInput[]
+    by: AttributeValueScalarFieldEnum[] | AttributeValueScalarFieldEnum
+    having?: AttributeValueScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AttributeValueCountAggregateInputType | true
+    _min?: AttributeValueMinAggregateInputType
+    _max?: AttributeValueMaxAggregateInputType
+  }
+
+  export type AttributeValueGroupByOutputType = {
+    id: string
+    attribute_id: string
+    value: string
+    metadata: JsonValue | null
+    _count: AttributeValueCountAggregateOutputType | null
+    _min: AttributeValueMinAggregateOutputType | null
+    _max: AttributeValueMaxAggregateOutputType | null
+  }
+
+  type GetAttributeValueGroupByPayload<T extends AttributeValueGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AttributeValueGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AttributeValueGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AttributeValueGroupByOutputType[P]>
+            : GetScalarType<T[P], AttributeValueGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AttributeValueSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    attribute_id?: boolean
+    value?: boolean
+    metadata?: boolean
+    attribute?: boolean | AttributeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["attributeValue"]>
+
+  export type AttributeValueSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    attribute_id?: boolean
+    value?: boolean
+    metadata?: boolean
+    attribute?: boolean | AttributeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["attributeValue"]>
+
+  export type AttributeValueSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    attribute_id?: boolean
+    value?: boolean
+    metadata?: boolean
+    attribute?: boolean | AttributeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["attributeValue"]>
+
+  export type AttributeValueSelectScalar = {
+    id?: boolean
+    attribute_id?: boolean
+    value?: boolean
+    metadata?: boolean
+  }
+
+  export type AttributeValueOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "attribute_id" | "value" | "metadata", ExtArgs["result"]["attributeValue"]>
+  export type AttributeValueInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    attribute?: boolean | AttributeDefaultArgs<ExtArgs>
+  }
+  export type AttributeValueIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    attribute?: boolean | AttributeDefaultArgs<ExtArgs>
+  }
+  export type AttributeValueIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    attribute?: boolean | AttributeDefaultArgs<ExtArgs>
+  }
+
+  export type $AttributeValuePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AttributeValue"
+    objects: {
+      attribute: Prisma.$AttributePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      attribute_id: string
+      value: string
+      metadata: Prisma.JsonValue | null
+    }, ExtArgs["result"]["attributeValue"]>
+    composites: {}
+  }
+
+  type AttributeValueGetPayload<S extends boolean | null | undefined | AttributeValueDefaultArgs> = $Result.GetResult<Prisma.$AttributeValuePayload, S>
+
+  type AttributeValueCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AttributeValueFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AttributeValueCountAggregateInputType | true
+    }
+
+  export interface AttributeValueDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AttributeValue'], meta: { name: 'AttributeValue' } }
+    /**
+     * Find zero or one AttributeValue that matches the filter.
+     * @param {AttributeValueFindUniqueArgs} args - Arguments to find a AttributeValue
+     * @example
+     * // Get one AttributeValue
+     * const attributeValue = await prisma.attributeValue.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AttributeValueFindUniqueArgs>(args: SelectSubset<T, AttributeValueFindUniqueArgs<ExtArgs>>): Prisma__AttributeValueClient<$Result.GetResult<Prisma.$AttributeValuePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AttributeValue that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AttributeValueFindUniqueOrThrowArgs} args - Arguments to find a AttributeValue
+     * @example
+     * // Get one AttributeValue
+     * const attributeValue = await prisma.attributeValue.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AttributeValueFindUniqueOrThrowArgs>(args: SelectSubset<T, AttributeValueFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AttributeValueClient<$Result.GetResult<Prisma.$AttributeValuePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AttributeValue that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AttributeValueFindFirstArgs} args - Arguments to find a AttributeValue
+     * @example
+     * // Get one AttributeValue
+     * const attributeValue = await prisma.attributeValue.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AttributeValueFindFirstArgs>(args?: SelectSubset<T, AttributeValueFindFirstArgs<ExtArgs>>): Prisma__AttributeValueClient<$Result.GetResult<Prisma.$AttributeValuePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AttributeValue that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AttributeValueFindFirstOrThrowArgs} args - Arguments to find a AttributeValue
+     * @example
+     * // Get one AttributeValue
+     * const attributeValue = await prisma.attributeValue.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AttributeValueFindFirstOrThrowArgs>(args?: SelectSubset<T, AttributeValueFindFirstOrThrowArgs<ExtArgs>>): Prisma__AttributeValueClient<$Result.GetResult<Prisma.$AttributeValuePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AttributeValues that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AttributeValueFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AttributeValues
+     * const attributeValues = await prisma.attributeValue.findMany()
+     *
+     * // Get first 10 AttributeValues
+     * const attributeValues = await prisma.attributeValue.findMany({ take: 10 })
+     *
+     * // Only select the `id`
+     * const attributeValueWithIdOnly = await prisma.attributeValue.findMany({ select: { id: true } })
+     *
+     */
+    findMany<T extends AttributeValueFindManyArgs>(args?: SelectSubset<T, AttributeValueFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AttributeValuePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AttributeValue.
+     * @param {AttributeValueCreateArgs} args - Arguments to create a AttributeValue.
+     * @example
+     * // Create one AttributeValue
+     * const AttributeValue = await prisma.attributeValue.create({
+     *   data: {
+     *     // ... data to create a AttributeValue
+     *   }
+     * })
+     *
+     */
+    create<T extends AttributeValueCreateArgs>(args: SelectSubset<T, AttributeValueCreateArgs<ExtArgs>>): Prisma__AttributeValueClient<$Result.GetResult<Prisma.$AttributeValuePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AttributeValues.
+     * @param {AttributeValueCreateManyArgs} args - Arguments to create many AttributeValues.
+     * @example
+     * // Create many AttributeValues
+     * const attributeValue = await prisma.attributeValue.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     */
+    createMany<T extends AttributeValueCreateManyArgs>(args?: SelectSubset<T, AttributeValueCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AttributeValues and returns the data saved in the database.
+     * @param {AttributeValueCreateManyAndReturnArgs} args - Arguments to create many AttributeValues.
+     * @example
+     * // Create many AttributeValues
+     * const attributeValue = await prisma.attributeValue.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Create many AttributeValues and only return the `id`
+     * const attributeValueWithIdOnly = await prisma.attributeValue.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    createManyAndReturn<T extends AttributeValueCreateManyAndReturnArgs>(args?: SelectSubset<T, AttributeValueCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AttributeValuePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AttributeValue.
+     * @param {AttributeValueDeleteArgs} args - Arguments to delete one AttributeValue.
+     * @example
+     * // Delete one AttributeValue
+     * const AttributeValue = await prisma.attributeValue.delete({
+     *   where: {
+     *     // ... filter to delete one AttributeValue
+     *   }
+     * })
+     *
+     */
+    delete<T extends AttributeValueDeleteArgs>(args: SelectSubset<T, AttributeValueDeleteArgs<ExtArgs>>): Prisma__AttributeValueClient<$Result.GetResult<Prisma.$AttributeValuePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AttributeValue.
+     * @param {AttributeValueUpdateArgs} args - Arguments to update one AttributeValue.
+     * @example
+     * // Update one AttributeValue
+     * const attributeValue = await prisma.attributeValue.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    update<T extends AttributeValueUpdateArgs>(args: SelectSubset<T, AttributeValueUpdateArgs<ExtArgs>>): Prisma__AttributeValueClient<$Result.GetResult<Prisma.$AttributeValuePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AttributeValues.
+     * @param {AttributeValueDeleteManyArgs} args - Arguments to filter AttributeValues to delete.
+     * @example
+     * // Delete a few AttributeValues
+     * const { count } = await prisma.attributeValue.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     *
+     */
+    deleteMany<T extends AttributeValueDeleteManyArgs>(args?: SelectSubset<T, AttributeValueDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AttributeValues.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AttributeValueUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AttributeValues
+     * const attributeValue = await prisma.attributeValue.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    updateMany<T extends AttributeValueUpdateManyArgs>(args: SelectSubset<T, AttributeValueUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AttributeValues and returns the data updated in the database.
+     * @param {AttributeValueUpdateManyAndReturnArgs} args - Arguments to update many AttributeValues.
+     * @example
+     * // Update many AttributeValues
+     * const attributeValue = await prisma.attributeValue.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Update zero or more AttributeValues and only return the `id`
+     * const attributeValueWithIdOnly = await prisma.attributeValue.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    updateManyAndReturn<T extends AttributeValueUpdateManyAndReturnArgs>(args: SelectSubset<T, AttributeValueUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AttributeValuePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AttributeValue.
+     * @param {AttributeValueUpsertArgs} args - Arguments to update or create a AttributeValue.
+     * @example
+     * // Update or create a AttributeValue
+     * const attributeValue = await prisma.attributeValue.upsert({
+     *   create: {
+     *     // ... data to create a AttributeValue
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AttributeValue we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AttributeValueUpsertArgs>(args: SelectSubset<T, AttributeValueUpsertArgs<ExtArgs>>): Prisma__AttributeValueClient<$Result.GetResult<Prisma.$AttributeValuePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AttributeValues.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AttributeValueCountArgs} args - Arguments to filter AttributeValues to count.
+     * @example
+     * // Count the number of AttributeValues
+     * const count = await prisma.attributeValue.count({
+     *   where: {
+     *     // ... the filter for the AttributeValues we want to count
+     *   }
+     * })
+    **/
+    count<T extends AttributeValueCountArgs>(
+      args?: Subset<T, AttributeValueCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AttributeValueCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AttributeValue.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AttributeValueAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AttributeValueAggregateArgs>(args: Subset<T, AttributeValueAggregateArgs>): Prisma.PrismaPromise<GetAttributeValueAggregateType<T>>
+
+    /**
+     * Group by AttributeValue.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AttributeValueGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     *
+    **/
+    groupBy<
+      T extends AttributeValueGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AttributeValueGroupByArgs['orderBy'] }
+        : { orderBy?: AttributeValueGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AttributeValueGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAttributeValueGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AttributeValue model
+   */
+  readonly fields: AttributeValueFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AttributeValue.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AttributeValueClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    attribute<T extends AttributeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AttributeDefaultArgs<ExtArgs>>): Prisma__AttributeClient<$Result.GetResult<Prisma.$AttributePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AttributeValue model
+   */
+  interface AttributeValueFieldRefs {
+    readonly id: FieldRef<"AttributeValue", 'String'>
+    readonly attribute_id: FieldRef<"AttributeValue", 'String'>
+    readonly value: FieldRef<"AttributeValue", 'String'>
+    readonly metadata: FieldRef<"AttributeValue", 'Json'>
+  }
+
+
+  // Custom InputTypes
+  /**
+   * AttributeValue findUnique
+   */
+  export type AttributeValueFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AttributeValue
+     */
+    select?: AttributeValueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AttributeValue
+     */
+    omit?: AttributeValueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AttributeValueInclude<ExtArgs> | null
+    /**
+     * Filter, which AttributeValue to fetch.
+     */
+    where: AttributeValueWhereUniqueInput
+  }
+
+  /**
+   * AttributeValue findUniqueOrThrow
+   */
+  export type AttributeValueFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AttributeValue
+     */
+    select?: AttributeValueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AttributeValue
+     */
+    omit?: AttributeValueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AttributeValueInclude<ExtArgs> | null
+    /**
+     * Filter, which AttributeValue to fetch.
+     */
+    where: AttributeValueWhereUniqueInput
+  }
+
+  /**
+   * AttributeValue findFirst
+   */
+  export type AttributeValueFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AttributeValue
+     */
+    select?: AttributeValueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AttributeValue
+     */
+    omit?: AttributeValueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AttributeValueInclude<ExtArgs> | null
+    /**
+     * Filter, which AttributeValue to fetch.
+     */
+    where?: AttributeValueWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of AttributeValues to fetch.
+     */
+    orderBy?: AttributeValueOrderByWithRelationInput | AttributeValueOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for AttributeValues.
+     */
+    cursor?: AttributeValueWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` AttributeValues from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` AttributeValues.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of AttributeValues.
+     */
+    distinct?: AttributeValueScalarFieldEnum | AttributeValueScalarFieldEnum[]
+  }
+
+  /**
+   * AttributeValue findFirstOrThrow
+   */
+  export type AttributeValueFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AttributeValue
+     */
+    select?: AttributeValueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AttributeValue
+     */
+    omit?: AttributeValueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AttributeValueInclude<ExtArgs> | null
+    /**
+     * Filter, which AttributeValue to fetch.
+     */
+    where?: AttributeValueWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of AttributeValues to fetch.
+     */
+    orderBy?: AttributeValueOrderByWithRelationInput | AttributeValueOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for AttributeValues.
+     */
+    cursor?: AttributeValueWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` AttributeValues from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` AttributeValues.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of AttributeValues.
+     */
+    distinct?: AttributeValueScalarFieldEnum | AttributeValueScalarFieldEnum[]
+  }
+
+  /**
+   * AttributeValue findMany
+   */
+  export type AttributeValueFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AttributeValue
+     */
+    select?: AttributeValueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AttributeValue
+     */
+    omit?: AttributeValueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AttributeValueInclude<ExtArgs> | null
+    /**
+     * Filter, which AttributeValues to fetch.
+     */
+    where?: AttributeValueWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of AttributeValues to fetch.
+     */
+    orderBy?: AttributeValueOrderByWithRelationInput | AttributeValueOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for listing AttributeValues.
+     */
+    cursor?: AttributeValueWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` AttributeValues from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` AttributeValues.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of AttributeValues.
+     */
+    distinct?: AttributeValueScalarFieldEnum | AttributeValueScalarFieldEnum[]
+  }
+
+  /**
+   * AttributeValue create
+   */
+  export type AttributeValueCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AttributeValue
+     */
+    select?: AttributeValueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AttributeValue
+     */
+    omit?: AttributeValueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AttributeValueInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AttributeValue.
+     */
+    data: XOR<AttributeValueCreateInput, AttributeValueUncheckedCreateInput>
+  }
+
+  /**
+   * AttributeValue createMany
+   */
+  export type AttributeValueCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AttributeValues.
+     */
+    data: AttributeValueCreateManyInput | AttributeValueCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AttributeValue createManyAndReturn
+   */
+  export type AttributeValueCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AttributeValue
+     */
+    select?: AttributeValueSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AttributeValue
+     */
+    omit?: AttributeValueOmit<ExtArgs> | null
+    /**
+     * The data used to create many AttributeValues.
+     */
+    data: AttributeValueCreateManyInput | AttributeValueCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AttributeValueIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AttributeValue update
+   */
+  export type AttributeValueUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AttributeValue
+     */
+    select?: AttributeValueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AttributeValue
+     */
+    omit?: AttributeValueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AttributeValueInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AttributeValue.
+     */
+    data: XOR<AttributeValueUpdateInput, AttributeValueUncheckedUpdateInput>
+    /**
+     * Choose, which AttributeValue to update.
+     */
+    where: AttributeValueWhereUniqueInput
+  }
+
+  /**
+   * AttributeValue updateMany
+   */
+  export type AttributeValueUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AttributeValues.
+     */
+    data: XOR<AttributeValueUpdateManyMutationInput, AttributeValueUncheckedUpdateManyInput>
+    /**
+     * Filter which AttributeValues to update
+     */
+    where?: AttributeValueWhereInput
+    /**
+     * Limit how many AttributeValues to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AttributeValue updateManyAndReturn
+   */
+  export type AttributeValueUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AttributeValue
+     */
+    select?: AttributeValueSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AttributeValue
+     */
+    omit?: AttributeValueOmit<ExtArgs> | null
+    /**
+     * The data used to update AttributeValues.
+     */
+    data: XOR<AttributeValueUpdateManyMutationInput, AttributeValueUncheckedUpdateManyInput>
+    /**
+     * Filter which AttributeValues to update
+     */
+    where?: AttributeValueWhereInput
+    /**
+     * Limit how many AttributeValues to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AttributeValueIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AttributeValue upsert
+   */
+  export type AttributeValueUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AttributeValue
+     */
+    select?: AttributeValueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AttributeValue
+     */
+    omit?: AttributeValueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AttributeValueInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AttributeValue to update in case it exists.
+     */
+    where: AttributeValueWhereUniqueInput
+    /**
+     * In case the AttributeValue found by the `where` argument doesn't exist, create a new AttributeValue with this data.
+     */
+    create: XOR<AttributeValueCreateInput, AttributeValueUncheckedCreateInput>
+    /**
+     * In case the AttributeValue was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AttributeValueUpdateInput, AttributeValueUncheckedUpdateInput>
+  }
+
+  /**
+   * AttributeValue delete
+   */
+  export type AttributeValueDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AttributeValue
+     */
+    select?: AttributeValueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AttributeValue
+     */
+    omit?: AttributeValueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AttributeValueInclude<ExtArgs> | null
+    /**
+     * Filter which AttributeValue to delete.
+     */
+    where: AttributeValueWhereUniqueInput
+  }
+
+  /**
+   * AttributeValue deleteMany
+   */
+  export type AttributeValueDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AttributeValues to delete
+     */
+    where?: AttributeValueWhereInput
+    /**
+     * Limit how many AttributeValues to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AttributeValue without action
+   */
+  export type AttributeValueDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AttributeValue
+     */
+    select?: AttributeValueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AttributeValue
+     */
+    omit?: AttributeValueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AttributeValueInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -2165,12 +4486,40 @@ export namespace Prisma {
   export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
 
 
+  export const AttributeScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    slug: 'slug',
+    input_type: 'input_type'
+  };
+
+  export type AttributeScalarFieldEnum = (typeof AttributeScalarFieldEnum)[keyof typeof AttributeScalarFieldEnum]
+
+
+  export const AttributeValueScalarFieldEnum: {
+    id: 'id',
+    attribute_id: 'attribute_id',
+    value: 'value',
+    metadata: 'metadata'
+  };
+
+  export type AttributeValueScalarFieldEnum = (typeof AttributeValueScalarFieldEnum)[keyof typeof AttributeValueScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
   };
 
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+  export const NullableJsonNullValueInput: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull
+  };
+
+  export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
   export const QueryMode: {
@@ -2189,6 +4538,15 @@ export namespace Prisma {
   export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
+  export const JsonNullValueFilter: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull,
+    AnyNull: typeof AnyNull
+  };
+
+  export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
+
+
   /**
    * Field references
    */
@@ -2198,56 +4556,70 @@ export namespace Prisma {
    * Reference to a field of type 'String'
    */
   export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
-    
+
 
 
   /**
    * Reference to a field of type 'String[]'
    */
   export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
-    
+
 
 
   /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
+
 
 
   /**
    * Reference to a field of type 'Int[]'
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
+
 
 
   /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
-    
+
 
 
   /**
    * Reference to a field of type 'DateTime[]'
    */
   export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
-    
+
+
+
+  /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+
+
+
+  /**
+   * Reference to a field of type 'QueryMode'
+   */
+  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+
 
 
   /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
-    
+
 
 
   /**
    * Reference to a field of type 'Float[]'
    */
   export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
-    
+
   /**
    * Deep Input Types
    */
@@ -2336,6 +4708,106 @@ export namespace Prisma {
     sort_order?: IntWithAggregatesFilter<"Category"> | number
     created_at?: DateTimeWithAggregatesFilter<"Category"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"Category"> | Date | string
+  }
+
+  export type AttributeWhereInput = {
+    AND?: AttributeWhereInput | AttributeWhereInput[]
+    OR?: AttributeWhereInput[]
+    NOT?: AttributeWhereInput | AttributeWhereInput[]
+    id?: UuidFilter<"Attribute"> | string
+    name?: StringFilter<"Attribute"> | string
+    slug?: StringFilter<"Attribute"> | string
+    input_type?: StringFilter<"Attribute"> | string
+    values?: AttributeValueListRelationFilter
+  }
+
+  export type AttributeOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    input_type?: SortOrder
+    values?: AttributeValueOrderByRelationAggregateInput
+  }
+
+  export type AttributeWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    slug?: string
+    AND?: AttributeWhereInput | AttributeWhereInput[]
+    OR?: AttributeWhereInput[]
+    NOT?: AttributeWhereInput | AttributeWhereInput[]
+    name?: StringFilter<"Attribute"> | string
+    input_type?: StringFilter<"Attribute"> | string
+    values?: AttributeValueListRelationFilter
+  }, "id" | "slug">
+
+  export type AttributeOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    input_type?: SortOrder
+    _count?: AttributeCountOrderByAggregateInput
+    _max?: AttributeMaxOrderByAggregateInput
+    _min?: AttributeMinOrderByAggregateInput
+  }
+
+  export type AttributeScalarWhereWithAggregatesInput = {
+    AND?: AttributeScalarWhereWithAggregatesInput | AttributeScalarWhereWithAggregatesInput[]
+    OR?: AttributeScalarWhereWithAggregatesInput[]
+    NOT?: AttributeScalarWhereWithAggregatesInput | AttributeScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"Attribute"> | string
+    name?: StringWithAggregatesFilter<"Attribute"> | string
+    slug?: StringWithAggregatesFilter<"Attribute"> | string
+    input_type?: StringWithAggregatesFilter<"Attribute"> | string
+  }
+
+  export type AttributeValueWhereInput = {
+    AND?: AttributeValueWhereInput | AttributeValueWhereInput[]
+    OR?: AttributeValueWhereInput[]
+    NOT?: AttributeValueWhereInput | AttributeValueWhereInput[]
+    id?: UuidFilter<"AttributeValue"> | string
+    attribute_id?: UuidFilter<"AttributeValue"> | string
+    value?: StringFilter<"AttributeValue"> | string
+    metadata?: JsonNullableFilter<"AttributeValue">
+    attribute?: XOR<AttributeScalarRelationFilter, AttributeWhereInput>
+  }
+
+  export type AttributeValueOrderByWithRelationInput = {
+    id?: SortOrder
+    attribute_id?: SortOrder
+    value?: SortOrder
+    metadata?: SortOrderInput | SortOrder
+    attribute?: AttributeOrderByWithRelationInput
+  }
+
+  export type AttributeValueWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: AttributeValueWhereInput | AttributeValueWhereInput[]
+    OR?: AttributeValueWhereInput[]
+    NOT?: AttributeValueWhereInput | AttributeValueWhereInput[]
+    attribute_id?: UuidFilter<"AttributeValue"> | string
+    value?: StringFilter<"AttributeValue"> | string
+    metadata?: JsonNullableFilter<"AttributeValue">
+    attribute?: XOR<AttributeScalarRelationFilter, AttributeWhereInput>
+  }, "id">
+
+  export type AttributeValueOrderByWithAggregationInput = {
+    id?: SortOrder
+    attribute_id?: SortOrder
+    value?: SortOrder
+    metadata?: SortOrderInput | SortOrder
+    _count?: AttributeValueCountOrderByAggregateInput
+    _max?: AttributeValueMaxOrderByAggregateInput
+    _min?: AttributeValueMinOrderByAggregateInput
+  }
+
+  export type AttributeValueScalarWhereWithAggregatesInput = {
+    AND?: AttributeValueScalarWhereWithAggregatesInput | AttributeValueScalarWhereWithAggregatesInput[]
+    OR?: AttributeValueScalarWhereWithAggregatesInput[]
+    NOT?: AttributeValueScalarWhereWithAggregatesInput | AttributeValueScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"AttributeValue"> | string
+    attribute_id?: UuidWithAggregatesFilter<"AttributeValue"> | string
+    value?: StringWithAggregatesFilter<"AttributeValue"> | string
+    metadata?: JsonNullableWithAggregatesFilter<"AttributeValue">
   }
 
   export type CategoryCreateInput = {
@@ -2430,6 +4902,107 @@ export namespace Prisma {
     sort_order?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AttributeCreateInput = {
+    id?: string
+    name: string
+    slug: string
+    input_type?: string
+    values?: AttributeValueCreateNestedManyWithoutAttributeInput
+  }
+
+  export type AttributeUncheckedCreateInput = {
+    id?: string
+    name: string
+    slug: string
+    input_type?: string
+    values?: AttributeValueUncheckedCreateNestedManyWithoutAttributeInput
+  }
+
+  export type AttributeUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    input_type?: StringFieldUpdateOperationsInput | string
+    values?: AttributeValueUpdateManyWithoutAttributeNestedInput
+  }
+
+  export type AttributeUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    input_type?: StringFieldUpdateOperationsInput | string
+    values?: AttributeValueUncheckedUpdateManyWithoutAttributeNestedInput
+  }
+
+  export type AttributeCreateManyInput = {
+    id?: string
+    name: string
+    slug: string
+    input_type?: string
+  }
+
+  export type AttributeUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    input_type?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AttributeUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    input_type?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AttributeValueCreateInput = {
+    id?: string
+    value: string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    attribute: AttributeCreateNestedOneWithoutValuesInput
+  }
+
+  export type AttributeValueUncheckedCreateInput = {
+    id?: string
+    attribute_id: string
+    value: string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type AttributeValueUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    attribute?: AttributeUpdateOneRequiredWithoutValuesNestedInput
+  }
+
+  export type AttributeValueUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    attribute_id?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type AttributeValueCreateManyInput = {
+    id?: string
+    attribute_id: string
+    value: string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type AttributeValueUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type AttributeValueUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    attribute_id?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type UuidFilter<$PrismaModel = never> = {
@@ -2638,6 +5211,110 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type AttributeValueListRelationFilter = {
+    every?: AttributeValueWhereInput
+    some?: AttributeValueWhereInput
+    none?: AttributeValueWhereInput
+  }
+
+  export type AttributeValueOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AttributeCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    input_type?: SortOrder
+  }
+
+  export type AttributeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    input_type?: SortOrder
+  }
+
+  export type AttributeMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    input_type?: SortOrder
+  }
+  export type JsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type AttributeScalarRelationFilter = {
+    is?: AttributeWhereInput
+    isNot?: AttributeWhereInput
+  }
+
+  export type AttributeValueCountOrderByAggregateInput = {
+    id?: SortOrder
+    attribute_id?: SortOrder
+    value?: SortOrder
+    metadata?: SortOrder
+  }
+
+  export type AttributeValueMaxOrderByAggregateInput = {
+    id?: SortOrder
+    attribute_id?: SortOrder
+    value?: SortOrder
+  }
+
+  export type AttributeValueMinOrderByAggregateInput = {
+    id?: SortOrder
+    attribute_id?: SortOrder
+    value?: SortOrder
+  }
+  export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedJsonNullableFilter<$PrismaModel>
+    _max?: NestedJsonNullableFilter<$PrismaModel>
+  }
+
   export type CategoryCreateNestedOneWithoutChildrenInput = {
     create?: XOR<CategoryCreateWithoutChildrenInput, CategoryUncheckedCreateWithoutChildrenInput>
     connectOrCreate?: CategoryCreateOrConnectWithoutChildrenInput
@@ -2714,6 +5391,62 @@ export namespace Prisma {
     update?: CategoryUpdateWithWhereUniqueWithoutParentInput | CategoryUpdateWithWhereUniqueWithoutParentInput[]
     updateMany?: CategoryUpdateManyWithWhereWithoutParentInput | CategoryUpdateManyWithWhereWithoutParentInput[]
     deleteMany?: CategoryScalarWhereInput | CategoryScalarWhereInput[]
+  }
+
+  export type AttributeValueCreateNestedManyWithoutAttributeInput = {
+    create?: XOR<AttributeValueCreateWithoutAttributeInput, AttributeValueUncheckedCreateWithoutAttributeInput> | AttributeValueCreateWithoutAttributeInput[] | AttributeValueUncheckedCreateWithoutAttributeInput[]
+    connectOrCreate?: AttributeValueCreateOrConnectWithoutAttributeInput | AttributeValueCreateOrConnectWithoutAttributeInput[]
+    createMany?: AttributeValueCreateManyAttributeInputEnvelope
+    connect?: AttributeValueWhereUniqueInput | AttributeValueWhereUniqueInput[]
+  }
+
+  export type AttributeValueUncheckedCreateNestedManyWithoutAttributeInput = {
+    create?: XOR<AttributeValueCreateWithoutAttributeInput, AttributeValueUncheckedCreateWithoutAttributeInput> | AttributeValueCreateWithoutAttributeInput[] | AttributeValueUncheckedCreateWithoutAttributeInput[]
+    connectOrCreate?: AttributeValueCreateOrConnectWithoutAttributeInput | AttributeValueCreateOrConnectWithoutAttributeInput[]
+    createMany?: AttributeValueCreateManyAttributeInputEnvelope
+    connect?: AttributeValueWhereUniqueInput | AttributeValueWhereUniqueInput[]
+  }
+
+  export type AttributeValueUpdateManyWithoutAttributeNestedInput = {
+    create?: XOR<AttributeValueCreateWithoutAttributeInput, AttributeValueUncheckedCreateWithoutAttributeInput> | AttributeValueCreateWithoutAttributeInput[] | AttributeValueUncheckedCreateWithoutAttributeInput[]
+    connectOrCreate?: AttributeValueCreateOrConnectWithoutAttributeInput | AttributeValueCreateOrConnectWithoutAttributeInput[]
+    upsert?: AttributeValueUpsertWithWhereUniqueWithoutAttributeInput | AttributeValueUpsertWithWhereUniqueWithoutAttributeInput[]
+    createMany?: AttributeValueCreateManyAttributeInputEnvelope
+    set?: AttributeValueWhereUniqueInput | AttributeValueWhereUniqueInput[]
+    disconnect?: AttributeValueWhereUniqueInput | AttributeValueWhereUniqueInput[]
+    delete?: AttributeValueWhereUniqueInput | AttributeValueWhereUniqueInput[]
+    connect?: AttributeValueWhereUniqueInput | AttributeValueWhereUniqueInput[]
+    update?: AttributeValueUpdateWithWhereUniqueWithoutAttributeInput | AttributeValueUpdateWithWhereUniqueWithoutAttributeInput[]
+    updateMany?: AttributeValueUpdateManyWithWhereWithoutAttributeInput | AttributeValueUpdateManyWithWhereWithoutAttributeInput[]
+    deleteMany?: AttributeValueScalarWhereInput | AttributeValueScalarWhereInput[]
+  }
+
+  export type AttributeValueUncheckedUpdateManyWithoutAttributeNestedInput = {
+    create?: XOR<AttributeValueCreateWithoutAttributeInput, AttributeValueUncheckedCreateWithoutAttributeInput> | AttributeValueCreateWithoutAttributeInput[] | AttributeValueUncheckedCreateWithoutAttributeInput[]
+    connectOrCreate?: AttributeValueCreateOrConnectWithoutAttributeInput | AttributeValueCreateOrConnectWithoutAttributeInput[]
+    upsert?: AttributeValueUpsertWithWhereUniqueWithoutAttributeInput | AttributeValueUpsertWithWhereUniqueWithoutAttributeInput[]
+    createMany?: AttributeValueCreateManyAttributeInputEnvelope
+    set?: AttributeValueWhereUniqueInput | AttributeValueWhereUniqueInput[]
+    disconnect?: AttributeValueWhereUniqueInput | AttributeValueWhereUniqueInput[]
+    delete?: AttributeValueWhereUniqueInput | AttributeValueWhereUniqueInput[]
+    connect?: AttributeValueWhereUniqueInput | AttributeValueWhereUniqueInput[]
+    update?: AttributeValueUpdateWithWhereUniqueWithoutAttributeInput | AttributeValueUpdateWithWhereUniqueWithoutAttributeInput[]
+    updateMany?: AttributeValueUpdateManyWithWhereWithoutAttributeInput | AttributeValueUpdateManyWithWhereWithoutAttributeInput[]
+    deleteMany?: AttributeValueScalarWhereInput | AttributeValueScalarWhereInput[]
+  }
+
+  export type AttributeCreateNestedOneWithoutValuesInput = {
+    create?: XOR<AttributeCreateWithoutValuesInput, AttributeUncheckedCreateWithoutValuesInput>
+    connectOrCreate?: AttributeCreateOrConnectWithoutValuesInput
+    connect?: AttributeWhereUniqueInput
+  }
+
+  export type AttributeUpdateOneRequiredWithoutValuesNestedInput = {
+    create?: XOR<AttributeCreateWithoutValuesInput, AttributeUncheckedCreateWithoutValuesInput>
+    connectOrCreate?: AttributeCreateOrConnectWithoutValuesInput
+    upsert?: AttributeUpsertWithoutValuesInput
+    connect?: AttributeWhereUniqueInput
+    update?: XOR<XOR<AttributeUpdateToOneWithWhereWithoutValuesInput, AttributeUpdateWithoutValuesInput>, AttributeUncheckedUpdateWithoutValuesInput>
   }
 
   export type NestedUuidFilter<$PrismaModel = never> = {
@@ -2884,6 +5617,29 @@ export namespace Prisma {
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
+  export type NestedJsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
 
   export type CategoryCreateWithoutChildrenInput = {
     id?: string
@@ -3021,6 +5777,98 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<"Category"> | Date | string
   }
 
+  export type AttributeValueCreateWithoutAttributeInput = {
+    id?: string
+    value: string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type AttributeValueUncheckedCreateWithoutAttributeInput = {
+    id?: string
+    value: string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type AttributeValueCreateOrConnectWithoutAttributeInput = {
+    where: AttributeValueWhereUniqueInput
+    create: XOR<AttributeValueCreateWithoutAttributeInput, AttributeValueUncheckedCreateWithoutAttributeInput>
+  }
+
+  export type AttributeValueCreateManyAttributeInputEnvelope = {
+    data: AttributeValueCreateManyAttributeInput | AttributeValueCreateManyAttributeInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AttributeValueUpsertWithWhereUniqueWithoutAttributeInput = {
+    where: AttributeValueWhereUniqueInput
+    update: XOR<AttributeValueUpdateWithoutAttributeInput, AttributeValueUncheckedUpdateWithoutAttributeInput>
+    create: XOR<AttributeValueCreateWithoutAttributeInput, AttributeValueUncheckedCreateWithoutAttributeInput>
+  }
+
+  export type AttributeValueUpdateWithWhereUniqueWithoutAttributeInput = {
+    where: AttributeValueWhereUniqueInput
+    data: XOR<AttributeValueUpdateWithoutAttributeInput, AttributeValueUncheckedUpdateWithoutAttributeInput>
+  }
+
+  export type AttributeValueUpdateManyWithWhereWithoutAttributeInput = {
+    where: AttributeValueScalarWhereInput
+    data: XOR<AttributeValueUpdateManyMutationInput, AttributeValueUncheckedUpdateManyWithoutAttributeInput>
+  }
+
+  export type AttributeValueScalarWhereInput = {
+    AND?: AttributeValueScalarWhereInput | AttributeValueScalarWhereInput[]
+    OR?: AttributeValueScalarWhereInput[]
+    NOT?: AttributeValueScalarWhereInput | AttributeValueScalarWhereInput[]
+    id?: UuidFilter<"AttributeValue"> | string
+    attribute_id?: UuidFilter<"AttributeValue"> | string
+    value?: StringFilter<"AttributeValue"> | string
+    metadata?: JsonNullableFilter<"AttributeValue">
+  }
+
+  export type AttributeCreateWithoutValuesInput = {
+    id?: string
+    name: string
+    slug: string
+    input_type?: string
+  }
+
+  export type AttributeUncheckedCreateWithoutValuesInput = {
+    id?: string
+    name: string
+    slug: string
+    input_type?: string
+  }
+
+  export type AttributeCreateOrConnectWithoutValuesInput = {
+    where: AttributeWhereUniqueInput
+    create: XOR<AttributeCreateWithoutValuesInput, AttributeUncheckedCreateWithoutValuesInput>
+  }
+
+  export type AttributeUpsertWithoutValuesInput = {
+    update: XOR<AttributeUpdateWithoutValuesInput, AttributeUncheckedUpdateWithoutValuesInput>
+    create: XOR<AttributeCreateWithoutValuesInput, AttributeUncheckedCreateWithoutValuesInput>
+    where?: AttributeWhereInput
+  }
+
+  export type AttributeUpdateToOneWithWhereWithoutValuesInput = {
+    where?: AttributeWhereInput
+    data: XOR<AttributeUpdateWithoutValuesInput, AttributeUncheckedUpdateWithoutValuesInput>
+  }
+
+  export type AttributeUpdateWithoutValuesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    input_type?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AttributeUncheckedUpdateWithoutValuesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    input_type?: StringFieldUpdateOperationsInput | string
+  }
+
   export type CategoryCreateManyParentInput = {
     id?: string
     name: string
@@ -3069,6 +5917,30 @@ export namespace Prisma {
     sort_order?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AttributeValueCreateManyAttributeInput = {
+    id?: string
+    value: string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type AttributeValueUpdateWithoutAttributeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type AttributeValueUncheckedUpdateWithoutAttributeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type AttributeValueUncheckedUpdateManyWithoutAttributeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
   }
 
 

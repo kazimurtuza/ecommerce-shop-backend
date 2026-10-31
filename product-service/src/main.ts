@@ -20,11 +20,11 @@ async function bootstrap() {
     options: {
       package: PRODUCT_PACKAGE,
       protoPath: getProductProtoPath(),
-      url: process.env.PRODUCT_GRPC_BIND_URL || '0.0.0.0:50053',
+      url: '0.0.0.0:4002',
     },
   });
   await app.listen();
-  Logger.log(`Product gRPC service is running on ${process.env.PRODUCT_GRPC_BIND_URL || '0.0.0.0:50053'}`);
+  Logger.log('Product gRPC service is running on port 4002');
 }
 
 bootstrap();

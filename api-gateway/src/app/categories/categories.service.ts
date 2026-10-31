@@ -14,7 +14,7 @@ export class CategoriesService implements OnModuleInit {
     this.productGrpcService = this.client.getService<ProductProto.ProductServiceClient>('ProductService');
   }
 
-  create(dto: CreateCategoryDto) {
+  create(dto: CreateCategoryDto): Promise<ProductProto.CategoryResponse> {
     const request: ProductProto.CreateCategoryRequest = {
       parentId: dto.parent_id ?? '',
       name: dto.name.trim(),
@@ -26,6 +26,20 @@ export class CategoriesService implements OnModuleInit {
     };
     return firstValueFrom(this.productGrpcService.createCategory(request));
   }
+
+  getCategory(id: string): Promise<ProductProto.CategoryResponse> {
+    return firstValueFrom(this.productGrpcService.getCategoryById({ id }));
+  }
+
+  getMainCategories(): Promise<ProductProto.CategoryListResponse> {
+    return firstValueFrom(this.productGrpcService.getAllCategories({}));
+  }
+
+  getChildCategories(parentId: string): Promise<ProductProto.CategoryListResponse> {
+    return firstValueFrom(this.productGrpcService.getChildCategories({ parentId }));
+  }
+
+
 
   private toProtoStatus(value: CreateCategoryDto['status']): ProductProto.ProductStatus {
     switch (value) {

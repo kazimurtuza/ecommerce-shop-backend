@@ -216,6 +216,10 @@ export interface GetAllCategoriesRequest {
   status: ProductStatus;
 }
 
+export interface GetChildCategoriesRequest {
+  parentId: string;
+}
+
 export interface UpdateCategoryRequest {
   id: string;
   parentId?: string | undefined;
@@ -305,6 +309,8 @@ export interface Attribute {
   id: string;
   name: string;
   values: AttributeValue[];
+  slug: string;
+  inputType: string;
 }
 
 export interface AttributeValue {
@@ -315,13 +321,13 @@ export interface AttributeValue {
 
 export interface CreateAttributeRequest {
   name: string;
-  values: string[];
+  inputType: string;
 }
 
 export interface UpdateAttributeRequest {
   id: string;
   name?: string | undefined;
-  values: string[];
+  inputType?: string | undefined;
 }
 
 export interface DeleteAttributeRequest {
@@ -442,6 +448,8 @@ export interface ProductServiceClient {
 
   getAllCategories(request: GetAllCategoriesRequest): Observable<CategoryListResponse>;
 
+  getChildCategories(request: GetChildCategoriesRequest): Observable<CategoryListResponse>;
+
   updateCategory(request: UpdateCategoryRequest): Observable<CategoryResponse>;
 
   deleteCategory(request: DeleteCategoryRequest): Observable<DeleteResponse>;
@@ -528,6 +536,10 @@ export interface ProductServiceController {
     request: GetAllCategoriesRequest,
   ): Promise<CategoryListResponse> | Observable<CategoryListResponse> | CategoryListResponse;
 
+  getChildCategories(
+    request: GetChildCategoriesRequest,
+  ): Promise<CategoryListResponse> | Observable<CategoryListResponse> | CategoryListResponse;
+
   updateCategory(
     request: UpdateCategoryRequest,
   ): Promise<CategoryResponse> | Observable<CategoryResponse> | CategoryResponse;
@@ -606,6 +618,7 @@ export function ProductServiceControllerMethods() {
       "createCategory",
       "getCategoryById",
       "getAllCategories",
+      "getChildCategories",
       "updateCategory",
       "deleteCategory",
       "createBrand",
