@@ -1,5 +1,6 @@
 export * from './lib/shared.module';
 export * from './lib/proto.constants';
+export * from './lib/slug.util';
 
 // Generated Protobuf Namespaces (Source of truth: shared/proto/*.proto)
 export * as AuthProto from './lib/generated/auth';

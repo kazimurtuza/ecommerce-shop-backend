@@ -130,21 +130,36 @@ exports.Prisma.CategoryScalarFieldEnum = {
   status: 'status',
   sort_order: 'sort_order',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  deleted_at: 'deleted_at'
 };
 
 exports.Prisma.AttributeScalarFieldEnum = {
   id: 'id',
   name: 'name',
   slug: 'slug',
-  input_type: 'input_type'
+  input_type: 'input_type',
+  deleted_at: 'deleted_at'
 };
 
 exports.Prisma.AttributeValueScalarFieldEnum = {
   id: 'id',
   attribute_id: 'attribute_id',
   value: 'value',
-  metadata: 'metadata'
+  metadata: 'metadata',
+  deleted_at: 'deleted_at'
+};
+
+exports.Prisma.BrandScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  description: 'description',
+  image: 'image',
+  status: 'status',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  deleted_at: 'deleted_at'
 };
 
 exports.Prisma.SortOrder = {
@@ -177,7 +192,8 @@ exports.Prisma.JsonNullValueFilter = {
 exports.Prisma.ModelName = {
   Category: 'Category',
   Attribute: 'Attribute',
-  AttributeValue: 'AttributeValue'
+  AttributeValue: 'AttributeValue',
+  Brand: 'Brand'
 };
 
 /**

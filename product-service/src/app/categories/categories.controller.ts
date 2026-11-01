@@ -128,11 +128,11 @@ export class CategoriesController {
     }
   }
 
-  private toProtoStatus(value: string): ProductProto.ProductStatus {
+  private toProtoStatus(value: number): ProductProto.ProductStatus {
     switch (value) {
-      case 'draft':
+      case 3:
         return ProductProto.ProductStatus.PRODUCT_STATUS_DRAFT;
-      case 'inactive':
+      case 2:
         return ProductProto.ProductStatus.PRODUCT_STATUS_INACTIVE;
       default:
         return ProductProto.ProductStatus.PRODUCT_STATUS_ACTIVE;

@@ -13,7 +13,7 @@ export class CategoriesService {
       throw new RpcException({ code: status.INVALID_ARGUMENT, message: 'id is required' });
     }
 
-    const category = await this.prisma.category.findUnique({ where: { id: id.trim() } });
+    const category = await this.prisma.category.findFirst({ where: { id: id.trim(), deleted_at: null } });
     if (!category) {
       throw new RpcException({ code: status.NOT_FOUND, message: `Category "${id}" not found` });
     }
@@ -22,7 +22,7 @@ export class CategoriesService {
 
   async getMainCategories() {
     return this.prisma.category.findMany({
-      where: { parent_id: null },
+      where: { parent_id: null, deleted_at: null },
       orderBy: { sort_order: 'asc' },
     });
   }
@@ -32,8 +32,8 @@ export class CategoriesService {
       throw new RpcException({ code: status.INVALID_ARGUMENT, message: 'parent_id is required' });
     }
 
-    const parent = await this.prisma.category.findUnique({
-      where: { id: parentId.trim() },
+    const parent = await this.prisma.category.findFirst({
+      where: { id: parentId.trim(), deleted_at: null },
       select: { id: true },
     });
     if (!parent) {
@@ -41,7 +41,7 @@ export class CategoriesService {
     }
 
     return this.prisma.category.findMany({
-      where: { parent_id: parentId.trim() },
+      where: { parent_id: parentId.trim(), deleted_at: null },
       orderBy: { sort_order: 'asc' },
     });
   }
@@ -55,8 +55,8 @@ export class CategoriesService {
     }
 
     if (dto.parentId) {
-      const parent = await this.prisma.category.findUnique({
-        where: { id: dto.parentId },
+      const parent = await this.prisma.category.findFirst({
+        where: { id: dto.parentId, deleted_at: null },
         select: { id: true },
       });
       if (!parent) {
@@ -84,14 +84,14 @@ export class CategoriesService {
     }
   }
 
-  private toDatabaseStatus(value: ProductProto.ProductStatus): string {
+  private toDatabaseStatus(value: ProductProto.ProductStatus): number {
     switch (value) {
-      case ProductProto.ProductStatus.PRODUCT_STATUS_DRAFT:
-        return 'draft';
       case ProductProto.ProductStatus.PRODUCT_STATUS_INACTIVE:
-        return 'inactive';
+        return 2;
+      case ProductProto.ProductStatus.PRODUCT_STATUS_DRAFT:
+        return 3;
       default:
-        return 'active';
+        return 1;
     }
   }
 }

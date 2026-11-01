@@ -15,7 +15,7 @@ export class AttributeValuesService {
     }
 
     const attribute = await this.prisma.attribute.findUnique({
-      where: { id: normalizedAttributeId },
+      where: { id: normalizedAttributeId, deleted_at: null },
       select: { id: true },
     });
     if (!attribute) {
@@ -36,13 +36,13 @@ export class AttributeValuesService {
       throw new RpcException({ code: status.INVALID_ARGUMENT, message: 'value must not be empty' });
     }
 
-    const existing = await this.prisma.attributeValue.findUnique({ where: { id: normalizedId } });
+    const existing = await this.prisma.attributeValue.findFirst({ where: { id: normalizedId, deleted_at: null } });
     if (!existing) {
       throw new RpcException({ code: status.NOT_FOUND, message: `Attribute value "${normalizedId}" not found` });
     }
 
     return this.prisma.attributeValue.update({
-      where: { id: normalizedId },
+      where: { id: normalizedId, deleted_at: null },
       data: value === undefined ? {} : { value: value.trim() },
     });
   }
@@ -53,14 +53,17 @@ export class AttributeValuesService {
       throw new RpcException({ code: status.INVALID_ARGUMENT, message: 'id is required' });
     }
 
-    const existing = await this.prisma.attributeValue.findUnique({
-      where: { id: normalizedId },
+    const existing = await this.prisma.attributeValue.findFirst({
+      where: { id: normalizedId, deleted_at: null },
       select: { id: true },
     });
     if (!existing) {
       throw new RpcException({ code: status.NOT_FOUND, message: `Attribute value "${normalizedId}" not found` });
     }
 
-    await this.prisma.attributeValue.delete({ where: { id: normalizedId } });
+    await this.prisma.attributeValue.update({
+      where: { id: normalizedId, deleted_at: null },
+      data: { deleted_at: new Date() },
+    });
   }
 }

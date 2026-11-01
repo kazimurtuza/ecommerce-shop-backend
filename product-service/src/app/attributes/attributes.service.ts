@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 import { status } from '@grpc/grpc-js';
+import { toSlug } from '@org/shared';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
@@ -9,7 +10,8 @@ export class AttributesService {
 
   async getAll() {
     return this.prisma.attribute.findMany({
-      include: { values: true },
+      where: { deleted_at: null },
+      include: { values: { where: { deleted_at: null } } },
       orderBy: { name: 'asc' },
     });
   }
@@ -26,10 +28,10 @@ export class AttributesService {
       return await this.prisma.attribute.create({
         data: {
           name: normalizedName,
-          slug: this.toSlug(normalizedName),
+          slug: toSlug(normalizedName, 'attribute'),
           input_type: inputType,
         },
-        include: { values: true },
+        include: { values: { where: { deleted_at: null } } },
       });
     } catch (error) {
       if (typeof error === 'object' && error !== null && 'code' in error && error.code === 'P2002') {
@@ -50,18 +52,18 @@ export class AttributesService {
     }
     const normalizedInputType = inputType === undefined ? undefined : this.normalizeInputType(inputType);
 
-    const existing = await this.prisma.attribute.findUnique({ where: { id: normalizedId } });
+    const existing = await this.prisma.attribute.findFirst({ where: { id: normalizedId, deleted_at: null } });
     if (!existing) {
       throw new RpcException({ code: status.NOT_FOUND, message: `Attribute "${normalizedId}" not found` });
     }
 
     return this.prisma.attribute.update({
-      where: { id: normalizedId },
+      where: { id: normalizedId, deleted_at: null },
       data: {
-        ...(name === undefined ? {} : { name: name.trim(), slug: this.toSlug(name.trim()) }),
+        ...(name === undefined ? {} : { name: name.trim(), slug: toSlug(name.trim(), 'attribute') }),
         ...(normalizedInputType === undefined ? {} : { input_type: normalizedInputType }),
       },
-      include: { values: true },
+      include: { values: { where: { deleted_at: null } } },
     });
   }
 
@@ -71,20 +73,15 @@ export class AttributesService {
       throw new RpcException({ code: status.INVALID_ARGUMENT, message: 'id is required' });
     }
 
-    const existing = await this.prisma.attribute.findUnique({ where: { id: normalizedId }, select: { id: true } });
+    const existing = await this.prisma.attribute.findFirst({ where: { id: normalizedId, deleted_at: null }, select: { id: true } });
     if (!existing) {
       throw new RpcException({ code: status.NOT_FOUND, message: `Attribute "${normalizedId}" not found` });
     }
 
-    await this.prisma.attribute.delete({ where: { id: normalizedId } });
-  }
-
-  private toSlug(value: string): string {
-    return value
-      .toLowerCase()
-      .trim()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/^-|-$/g, '') || 'attribute';
+    await this.prisma.$transaction([
+      this.prisma.attributeValue.updateMany({ where: { attribute_id: normalizedId, deleted_at: null }, data: { deleted_at: new Date() } }),
+      this.prisma.attribute.update({ where: { id: normalizedId }, data: { deleted_at: new Date() } }),
+    ]);
   }
 
   private normalizeInputType(inputType?: string): 'select' | 'color' | 'text' {
